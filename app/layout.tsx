@@ -4,6 +4,7 @@ import Head from 'next/head'
 import './globals.css'
 import Navigation from '@/components/navigation'
 import { Toaster } from 'sonner'
+import StoreProvider from './StoreProvider'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,9 +32,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased max-w-[360px] w-full mx-auto`}
       >
-        {children}
+        <StoreProvider>{children}</StoreProvider>
         <Toaster />
         <Navigation />
       </body>
