@@ -56,12 +56,14 @@ function ContactItem({
       onMouseUp={handleLongPressEnd}
       style={style}
       key={mobile}
-      className="p-2 border-y-8  border-first bg-third flex flex-row justify-between items-center"
+      className="p-2 border-y-8  border-first bg-third  flex flex-cols gap-4  justify-center items-center"
     >
-      {/* <div className="flex flex-col justify-center items-start  gap-2"> */}
-      <h2 className="text-lg font-semibold">{name}</h2>
-      {/* </div> */}
-      <p className="text-m text-gray-600">{mobile}</p>
+      {name.length >= 16 ? (
+        <h2 className="text-lg w-36 font-semibold">{name.slice(0, 13)}...</h2>
+      ) : (
+        <h2 className="text-lg w-36 font-semibold">{name}</h2>
+      )}
+      <p className="text-m  text-gray-600">{mobile}</p>
       <Phone />
     </div>
   )

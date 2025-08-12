@@ -20,7 +20,7 @@ import { House, List, Users, Plus, Contact } from 'lucide-react'
 
 function Navigation() {
   return (
-    <div className="bg-first w-full  flex h-12 px-4  gap-8 justify-center items-center fixed bottom-0 rounded ">
+    <div className="bg-first max-w-[360px] w-full mx-auto flex h-12 px-4  gap-8 justify-center items-center fixed bottom-0 rounded ">
       {data.map((item) => {
         return (
           <Link key={item.name} href={item.path}>
