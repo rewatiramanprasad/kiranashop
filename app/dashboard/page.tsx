@@ -1,10 +1,13 @@
 import React from 'react'
-const data = [
-  { heading: 'Total dues', data: 'Rs. 100500/-' },
-  { heading: 'Maximum dues', data: 'Ankita Mukherjee' },
-  { heading: 'Minimum dues', data: 'Debadrita Dey' },
-]
-function dashboardPage() {
+
+async function dashboardPage() {
+  const response = await fetch('http://localhost:3000/api/dashboard')
+  const res = await response.json()
+  const data = [
+    { heading: 'Total dues', data: `Rs. ${res.data.total}/-` },
+    { heading: 'Maximum dues', data: res.data.maxDues },
+    { heading: 'Minimum dues', data: res.data.minDues },
+  ]
   return (
     <div className="bg-first min-h-screen ">
       <h1 className=" flex justify-center text-2xl pt-6 font-bold text-second">
@@ -12,7 +15,6 @@ function dashboardPage() {
       </h1>
       <div>
         {data.map((item, index) => {
-        
           return (
             <div
               key={index}
