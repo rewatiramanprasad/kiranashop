@@ -8,7 +8,6 @@ async function page({ params }: { params: { id: string } }) {
     const res = await fetch(`http://localhost:3000/api/list/${id}`)
     const data = await res.json()
     const userData = await fetch(`http://localhost:3000/api/member/${id}`)
-    // console.log(userData)
     const memberData = await userData.json()
     console.log(data.data)
     if (data.success === false || memberData.success === false) {
