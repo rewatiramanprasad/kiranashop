@@ -1,14 +1,30 @@
+import ActionDetails from '@/components/ActionDetails'
+import Container from '@/components/container'
 import React from 'react'
 
-function page() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold tracking-wider text-third">Add Dues</h1>
-      <p className="text-gray-500">
-        This is the page to add dues for customers.
-      </p>
-    </div>
-  )
+async function page() {
+  try {
+    const res = await fetch('http://localhost:3000/api/action')
+    const data = await res.json()
+    if (data.success === false) {
+      throw new Error(data.message)
+    }
+    return (
+      <Container>
+        <ActionDetails data={data.data} />
+      </Container>
+    )
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    return (
+      <Container>
+        <h1 className="text-2xl font-bold text-red-500">
+          Error:{' '}
+          {error instanceof Error ? error.message : 'An unknown error occurred'}
+        </h1>
+      </Container>
+    )
+  }
 }
 
 export default page

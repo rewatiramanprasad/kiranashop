@@ -106,6 +106,9 @@ export const totalDues = async () => {
   return  db.raw(
     'select sum(remainDues)as totalDues from (select member_id,(sum(amount)-sum(case when is_paid then amount else 0 end)- sum(case when dues_type then amount else 0 end))as remaindues from dues group by member_id ) as totalDuesTable'
   )
+}
 
-  
+export const fetchAllMembersData = async () => {
+  return await db<DuesMember>('duesmember').join('dues', 'duesmember.id', 'dues.member_id')
+    .select('duesmember.id', 'duesmember.name', 'duesmember.mobile','dues.amount', 'dues.remarks', 'dues.is_paid', 'dues.dues_type', 'dues.createdAt', 'dues.updateAt')
 }
