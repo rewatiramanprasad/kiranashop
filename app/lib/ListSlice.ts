@@ -1,19 +1,19 @@
 import {createSlice,createAsyncThunk } from '@reduxjs/toolkit'
 import { set } from 'zod';
 
-interface List { 
-    id: string;
+interface List {
+    member_id: string;
     name: string;
     amount: number;
-    date: string;
+    mobile: number
 }
 
-export const fetchList = createAsyncThunk('lists/fetchLists', async () => {
-    const response = await fetch('/api/list')
-    const data = await response.json()
-    console.log(data)
-    return data
- })
+// export const fetchList = createAsyncThunk('lists/fetchLists', async () => {
+//     const response = await fetch('/api/list')
+//     const data = await response.json()
+//     console.log(data)
+//     return data
+//  })
 
 const ListSlice = createSlice({
     name: 'list',

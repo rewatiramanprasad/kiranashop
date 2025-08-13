@@ -3,35 +3,43 @@ import React, { useEffect } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import SearchInput from '@/components/search'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setList } from '@/app/lib/ListSlice'
+import { setSearchTerm } from '@/app/lib/FilterListSlice'
+import { SearchFilterSelector } from '@/app/lib/FilterSelector'
 
 function SearchAndList({ data }: { data: any[] }) {
   const dispatch = useDispatch()
   //we can use useSelector to get the data from the store, but here we are passing it as a prop
+  const handleSearch = (str: string) => {
+    dispatch(setSearchTerm(str))
+  }
+
+  const filterData = useSelector(SearchFilterSelector)
 
   useEffect(() => {
     dispatch(setList(data))
+    // dispatch()
   }, [data, dispatch])
   return (
     <div className="flex flex-col items-center">
-      <SearchInput />
+      <SearchInput handleSearch={handleSearch} />
       <List
         height={685}
-        itemCount={data.length}
+        itemCount={filterData.length}
         itemSize={76 + 8}
         width={'95%'}
-        itemData={data}
+        itemData={filterData}
         className="mb-2 p-4 bg-first rounded shadow"
       >
         {({ index, style }) => {
-          const item = data[index]
+          const item = filterData[index]
 
           return (
             <Link href={`/list/${item.member_id}`}>
               <div
                 style={style}
-                key={item.id}
+                key={item.member_id}
                 className="p-4 border-y-8  border-first bg-third flex flex-row justify-between items-center"
               >
                 <div className="flex flex-col justify-center items-start  gap-2">

@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ListReducer from './ListSlice'
 import CustomerDetailsReducer from './customerDetailsSlice'
+import FilterListReducer from './FilterListSlice'
 export const store = () => {
     return configureStore({
         reducer: {
             list: ListReducer,
-            CustomerDetails:CustomerDetailsReducer
+            CustomerDetails: CustomerDetailsReducer,
+            filterList: FilterListReducer
         }
     })
 }
