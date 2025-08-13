@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import ListReducer from './List'
+import ListReducer from './ListSlice'
 import CustomerDetailsReducer from './customerDetailsSlice'
 export const store = () => {
     return configureStore({

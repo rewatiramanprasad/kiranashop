@@ -4,7 +4,7 @@ import { FixedSizeList as List } from 'react-window'
 import SearchInput from '@/components/search'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
-import { setList } from '@/app/lib/List'
+import { setList } from '@/app/lib/ListSlice'
 
 function SearchAndList({ data }: { data: any[] }) {
   const dispatch = useDispatch()
