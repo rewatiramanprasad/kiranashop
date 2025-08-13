@@ -30,10 +30,9 @@ export async function createPayment(item: Dues) {
 
 export const getDuesList = async () => {
   return db<Dues>('dues')
-    .sum('amount as amount')
     .groupBy('member_id')
     .join('duesmember', 'dues.member_id', 'duesmember.id')
-    .select('duesmember.name', 'duesmember.mobile', 'dues.member_id')
+    .select('duesmember.name', 'duesmember.mobile', 'dues.member_id',db.raw('sum(amount)-sum(case when is_paid then amount else 0 end)- sum(case when dues_type then amount else 0 end) as amount'))
 }
 
 export const getDuesById = async (id: number) => {
