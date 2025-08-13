@@ -1,11 +1,10 @@
-import {createSlice,createAsyncThunk } from '@reduxjs/toolkit'
-import { set } from 'zod';
+import { createSlice } from '@reduxjs/toolkit'
 
 interface List {
-    member_id: string;
-    name: string;
-    amount: number;
-    mobile: number
+  member_id: string
+  name: string
+  amount: number
+  mobile: number
 }
 
 // export const fetchList = createAsyncThunk('lists/fetchLists', async () => {
@@ -16,17 +15,17 @@ interface List {
 //  })
 
 const ListSlice = createSlice({
-    name: 'list',
-    initialState: {
-        data: [] as List[],
-        status: 'idle',
-        error: null as string | null
-    },
+  name: 'list',
+  initialState: {
+    data: [] as List[],
+    status: 'idle',
+    error: null as string | null,
+  },
   reducers: {
-      setList: (state, action) => {
-          state.data = action.payload;
-      }
+    setList: (state, action) => {
+      state.data = action.payload
     },
+  },
   //   extraReducers: (builder) => {
   //   builder
   //     .addCase(fetchList.pending, (state) => {

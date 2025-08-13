@@ -1,5 +1,4 @@
 import React from 'react'
-import { dummyData } from '@/dummyData.mjs'
 import Container from '@/components/container'
 import SearchAndList from '@/components/SearchAndList'
 
