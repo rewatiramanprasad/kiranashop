@@ -27,7 +27,7 @@ function ContactList({ data }: { data: any[] }) {
         itemSize={76 + 8}
         width={'100%'}
         itemData={filterData}
-        className="mb-2 p-4 bg-white rounded shadow"
+        className="mb-2 p-4 bg-first rounded shadow"
       >
         {({ index, style }) => {
           const item = filterData[index]
