@@ -1,12 +1,17 @@
-import { createCustomer } from "@/server/duesModel";
+import { createCustomer, Customer } from "@/server/duesModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) { 
     
     const body = await request.json();
-    console.log("logging body from route.ts",body)
-    const res = await createCustomer(body);
-    console.log("logging res from route.ts",res)
+    console.log('Received data:', body);
+    const res = await createCustomer({name: body.Name, mobile: body.Mobile, amount: body.Amount, remarks: body.Remarks});
+    if (!res) {
+        return NextResponse.json({
+            success: false,
+            message: "Failed to add customer"
+        }, { status: 500 });
+    }
     return NextResponse.json({
         data: [body],
         success:true,

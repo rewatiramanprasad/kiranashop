@@ -18,8 +18,30 @@ export interface Dues {
   updatedAt?: string
 }
 
-export async function createCustomer(item: DuesMember) {
-  return db<DuesMember>('duesmember').insert(item)
+export interface Customer extends DuesMember {
+  amount: number
+  remarks?: string
+}
+
+export async function createCustomer(item: Customer) {
+const data=await db<DuesMember>('duesmember').insert({
+    name: item.name,
+    mobile: item.mobile,
+  },['id'])
+  
+  if ( data.length === 1) {
+  
+    return await createDues({
+      member_id: data[0]?.id!,
+      amount: item.amount,
+      remarks: item.remarks,
+      is_paid: false,
+      dues_type: 'dues',
+    })
+  } else {
+    throw new Error('Failed to create customer')
+  
+  }
 }
 export async function createDues(item: Dues) {
   return db<Dues>('dues').insert(item)
