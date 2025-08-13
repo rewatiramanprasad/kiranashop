@@ -16,8 +16,8 @@ export const SearchFilterSelector = createSelector(
 )
 
 export const ContactFilterSelector = createSelector(
-    (state: RootState) => state.list.data,
-    (state: RootState) => state.filterList.searchTerm,
+    (state: RootState) => state.contact.data,
+    (state: RootState) => state.filterList.contactSearchTerm,
     (data, searchTerm) => {
        
         if (!searchTerm) return data;

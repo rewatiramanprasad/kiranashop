@@ -6,8 +6,7 @@ async function ContactPage() {
   const data = await res.json()
 
   return (
-    // <div className="bg-first flex flex-col items-center">
-    // </div>
+    
     <Container>
       <ContactList data={data.data} />
     </Container>

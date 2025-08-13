@@ -11,13 +11,16 @@ interface Item {
 interface FilterListState {
     data: Item[];
     searchTerm: string;
+    contactSearchTerm: string;
 }
 
 const FilterListSlice = createSlice({
     name: 'filterList',
     initialState: {
         data: [] as Item[],
-        searchTerm: ''
+        searchTerm: '',
+        contactSearchTerm: ''
+
     } as FilterListState,
     reducers: {
         setFilterList: (state, action) => {
@@ -25,9 +28,12 @@ const FilterListSlice = createSlice({
         },
         setSearchTerm: (state, action) => {
             state.searchTerm = action.payload;
+        },
+        setContactSearchTerm: (state, action) => {
+            state.contactSearchTerm = action.payload;
         }
     }
 })
 
-export const { setFilterList, setSearchTerm } = FilterListSlice.actions;
+export const { setContactSearchTerm,setFilterList, setSearchTerm } = FilterListSlice.actions;
 export default FilterListSlice.reducer;

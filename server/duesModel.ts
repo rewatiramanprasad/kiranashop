@@ -81,7 +81,7 @@ export const deleteProduct = async (id: number) => {
 }
 
 export const getContact = async () => {
-  return db<DuesMember>('duesmember').select('name', 'mobile')
+  return db<DuesMember>('duesmember').select('name', 'mobile','id')
 }
 
 export const maxDues = async () => {

@@ -1,24 +1,36 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import SearchInput from '@/components/search'
 import { Phone } from 'lucide-react'
 import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { setContacts } from '@/app/lib/contactSlice'
+import { setContactSearchTerm } from '@/app/lib/FilterListSlice'
+import { ContactFilterSelector } from '@/app/lib/FilterSelector'
 
 function ContactList({ data }: { data: any[] }) {
+  const dispatch = useDispatch()
+  const handleSearch = (str: string) => {
+    dispatch(setContactSearchTerm(str))
+  }
+  const filterData = useSelector(ContactFilterSelector)
+  useEffect(() => {
+    dispatch(setContacts(data))
+  }, [])
   return (
     <div className="flex flex-col items-center">
-      <SearchInput />
+      <SearchInput handleSearch={handleSearch} />
       <List
         height={700}
-        itemCount={data.length}
+        itemCount={filterData.length}
         itemSize={76 + 8}
         width={'100%'}
-        itemData={data}
+        itemData={filterData}
         className="mb-2 p-4 bg-white rounded shadow"
       >
         {({ index, style }) => {
-          const item = data[index]
+          const item = filterData[index]
 
           return (
             <ContactItem name={item.name} mobile={item.mobile} style={style} />
@@ -35,13 +47,13 @@ function ContactItem({
   style,
 }: {
   name: string
-  mobile: string
+  mobile: number
   style: React.CSSProperties
 }) {
   const timerRef = React.useRef<NodeJS.Timeout | null>(null)
   const handleLongPressStart = () => {
     timerRef.current = setTimeout(() => {
-      navigator.clipboard.writeText(mobile)
+      navigator.clipboard.writeText(String(mobile))
       toast.info('Phone number copied to clipboard')
     }, 600)
   }
