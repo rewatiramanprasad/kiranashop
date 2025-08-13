@@ -1,12 +1,16 @@
 const data = [
-  { name: 'Home', path: '/dashboard', icon: <House color="#F4BB4A" size={36} /> },
+  {
+    name: 'Home',
+    path: '/dashboard',
+    icon: <House color="#F4BB4A" size={36} />,
+  },
   { name: 'list', path: '/list', icon: <List color="#F4BB4A" size={36} /> },
   {
     name: 'Customer',
     path: '/addCustomer',
     icon: <Users color="#F4BB4A" size={48} strokeWidth={3} />,
   },
-  { name: 'Dues', path: '/addDues', icon: <Plus color="#F4BB4A" size={36} /> },
+  { name: 'Action', path: '/action', icon: <Plus color="#F4BB4A" size={36} /> },
   {
     name: 'Contact',
     path: '/contact',
