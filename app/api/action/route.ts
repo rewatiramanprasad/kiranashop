@@ -23,6 +23,9 @@ export async function GET() {
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred'
     console.error('Error fetching members:', error)
-    return NextResponse.json({ success: false, message }, { status: 500 })
+    return NextResponse.json(
+      { data: [], success: false, message },
+      { status: 500 }
+    )
   }
 }
