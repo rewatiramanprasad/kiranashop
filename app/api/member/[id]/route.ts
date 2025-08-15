@@ -23,6 +23,9 @@ export async function GET(
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred'
-    return NextResponse.json({ message }, { status: 404 })
+    return NextResponse.json(
+      { data: [], success: false, message },
+      { status: 404 }
+    )
   }
 }

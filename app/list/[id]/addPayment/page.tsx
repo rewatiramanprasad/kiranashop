@@ -57,7 +57,6 @@ function AddDue() {
         body: JSON.stringify({ ...values, id }),
       })
       const resData = await response.json()
-      console.log(resData)
       if (resData.success) {
         form.reset()
         toast.info('Payment added successfully')

@@ -9,7 +9,6 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
     const data = await res.json()
     const userData = await fetch(`http://localhost:3000/api/member/${id}`)
     const memberData = await userData.json()
-    console.log(data.data)
     if (data.success === false || memberData.success === false) {
       if (data.success === false) {
         throw new Error(data.message)
