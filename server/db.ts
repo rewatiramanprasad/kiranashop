@@ -1,4 +1,3 @@
-
 import knex from 'knex'
 
 export const db = knex({
@@ -6,4 +5,5 @@ export const db = knex({
   connection: {
     filename: 'dues.sqlite3',
   },
+  useNullAsDefault: true,
 })
