@@ -8,8 +8,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setContacts } from '@/app/lib/contactSlice'
 import { setContactSearchTerm } from '@/app/lib/FilterListSlice'
 import { ContactFilterSelector } from '@/app/lib/FilterSelector'
+import { ContactItem } from '@/app/contact/page'
 
-function ContactList({ data }: { data: any[] }) {
+function ContactList({ data }: { data: ContactItem[] }) {
   const dispatch = useDispatch()
   const handleSearch = (str: string) => {
     dispatch(setContactSearchTerm(str))
@@ -17,7 +18,7 @@ function ContactList({ data }: { data: any[] }) {
   const filterData = useSelector(ContactFilterSelector)
   useEffect(() => {
     dispatch(setContacts(data))
-  }, [])
+  }, [data, dispatch])
   return (
     <div className="flex flex-col items-center">
       <SearchInput handleSearch={handleSearch} />
@@ -33,15 +34,20 @@ function ContactList({ data }: { data: any[] }) {
           const item = filterData[index]
 
           return (
-            <ContactItem name={item.name} mobile={item.mobile} style={style} />
+            <ContactListItem
+              name={item.name}
+              mobile={item.mobile}
+              style={style}
+            />
           )
         }}
       </List>
     </div>
   )
 }
+export default ContactList
 
-function ContactItem({
+function ContactListItem({
   name,
   mobile,
   style,
@@ -80,5 +86,3 @@ function ContactItem({
     </div>
   )
 }
-
-export default ContactList

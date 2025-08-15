@@ -2,12 +2,12 @@ import React from 'react'
 import ContactList from '@/components/contactLists'
 import Container from '@/components/container'
 
-interface ContactItem {
+export interface ContactItem {
   id: number
   name: string
   email: string
 }
-interface ContactResponse {
+export interface ContactResponse {
   data: ContactItem[]
   success: boolean
   message: string
