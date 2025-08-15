@@ -9,7 +9,7 @@ import Heading from '@/components/heading'
 import FormInput from '@/components/formInput'
 import React from 'react'
 import { toast } from 'sonner'
-import DateInput from '@/components/DateInput'
+import DateInput from '@/components/dateInputs'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/lib/store'
 import { useRouter } from 'next/navigation'
@@ -57,7 +57,7 @@ function AddDue() {
         body: JSON.stringify({ ...values, id }),
       })
       const resData = await response.json()
-      
+
       if (resData.success) {
         form.reset()
         toast.info('Dues added successfully')

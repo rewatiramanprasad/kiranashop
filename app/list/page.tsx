@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from '@/components/container'
-import SearchAndList from '@/components/SearchAndList'
+import SearchAndList from '@/components/searchAndLists'
 
 async function ListPage() {
   try {

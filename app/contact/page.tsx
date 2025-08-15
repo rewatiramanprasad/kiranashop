@@ -1,5 +1,5 @@
 import React from 'react'
-import ContactList from '@/components/ContactList'
+import ContactList from '@/components/contactLists'
 import Container from '@/components/container'
 
 interface ContactItem {

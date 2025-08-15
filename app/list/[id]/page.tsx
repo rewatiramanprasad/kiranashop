@@ -1,8 +1,8 @@
 import Container from '@/components/container'
-import CustomerDetails from '@/components/CustomerDetails'
+import CustomerDetails from '@/components/customerDetail'
 import React from 'react'
 
-async function page({ params }: { params: Promise<{ id: string }> }) {
+async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   try {
     const res = await fetch(`http://localhost:3000/api/list/${id}`)
@@ -36,4 +36,4 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
   }
 }
 
-export default page
+export default CustDetails

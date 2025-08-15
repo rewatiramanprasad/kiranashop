@@ -1,7 +1,7 @@
 import Container from '@/components/container'
 import React from 'react'
 
-async function dashboardPage() {
+async function DashboardPage() {
   try {
     const response = await fetch('http://localhost:3000/api/dashboard', {
       cache: 'default',
@@ -50,4 +50,4 @@ async function dashboardPage() {
   }
 }
 
-export default dashboardPage
+export default DashboardPage

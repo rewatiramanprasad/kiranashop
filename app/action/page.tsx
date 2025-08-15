@@ -1,4 +1,4 @@
-import ActionDetails from '@/components/ActionDetails'
+import ActionDetails from '@/components/actionsDetails'
 import Container from '@/components/container'
 import React from 'react'
 

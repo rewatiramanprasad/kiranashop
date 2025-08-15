@@ -9,7 +9,7 @@ import Heading from '@/components/heading'
 import FormInput from '@/components/formInput'
 import React from 'react'
 import { toast } from 'sonner'
-import DateInput from '@/components/DateInput'
+import DateInput from '@/components/dateInputs'
 
 const formSchema = z.object({
   Name: z.string().min(2, {

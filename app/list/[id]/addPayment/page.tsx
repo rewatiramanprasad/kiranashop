@@ -9,7 +9,7 @@ import Heading from '@/components/heading'
 import FormInput from '@/components/formInput'
 import React from 'react'
 import { toast } from 'sonner'
-import DateInput from '@/components/DateInput'
+import DateInput from '@/components/dateInputs'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/lib/store'
 import { useRouter } from 'next/navigation'
@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 })
 
-function AddDue() {
+function AddPayment() {
   const router = useRouter()
   const id = useSelector((state: RootState) => state.CustomerDetails.id)
   const name = useSelector((state: RootState) => state.CustomerDetails.name)
@@ -121,4 +121,4 @@ function AddDue() {
   )
 }
 
-export default AddDue
+export default AddPayment
