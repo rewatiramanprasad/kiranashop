@@ -2,7 +2,7 @@ import Container from '@/components/container'
 import CustomerDetails from '@/components/CustomerDetails'
 import React from 'react'
 
-async function page({ params }: { params: { id: string } }) {
+async function page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   try {
     const res = await fetch(`http://localhost:3000/api/list/${id}`)

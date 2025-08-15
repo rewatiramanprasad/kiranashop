@@ -16,14 +16,15 @@ async function ListPage() {
       </Container>
     )
   } catch (error) {
-    console.error('Error fetching list data:', error)
-
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred'
     return (
-      <h1 className=" text-2xl text-center text-red-500">
-        {typeof error === 'object' && error !== null && 'message' in error
-          ? (error as { message?: string }).message
-          : 'An error occurred'}
-      </h1>
+      <Container>
+        <div className="text-red-500">
+          <h1>Error</h1>
+          <p>{message}</p>
+        </div>
+      </Container>
     )
   }
 }

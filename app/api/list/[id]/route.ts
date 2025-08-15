@@ -1,17 +1,37 @@
-import { getDuesById, getTotalAmountById } from "@/server/duesModel";
-import { NextRequest, NextResponse } from "next/server";
+import { getDuesById, getTotalAmountById } from '@/server/duesModel'
+import { type NextRequest, NextResponse } from 'next/server'
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) { 
-    
-    const { id } =await  params;
-    // Assuming you have a function to get dues by ID
-    const data = await getDuesById(parseInt(id)); // Replace with actual function to fetch dues by ID
-    const totalAmount= await getTotalAmountById(parseInt(id));
-    console.log("logging from remainAmount",totalAmount)// Replace with actual function to fetch total amount by ID
-    if (!data) {
-        return NextResponse.json({ success: false, message: "Data not found" }, { status: 404 });
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: number }> }
+) {
+  try {
+    const paramRes = await params
+    const id = paramRes.id
+
+    if (!id) {
+      throw new Error('ID parameter is required')
     }
-
-    const remainDues = (totalAmount[0] as { remainDues?: number })?.remainDues ?? 0;
-    return NextResponse.json({ data: { remainDues, data }, success: true, message: ` ${data.length} rows fetched successfully` }, { status: 200 });    
+    const dueData = await getDuesById(id)
+    const totalAmount = await getTotalAmountById(id)
+    if (!dueData) {
+      throw new Error('Something went wrong while fetching dues data')
+    }
+    const data = { dueData, totalAmount }
+    return NextResponse.json(
+      {
+        data: data,
+        success: true,
+        message: `${dueData.length} rows fetched successfully`,
+      },
+      { status: 200 }
+    )
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred'
+    return NextResponse.json(
+      { data: [], success: false, message: message },
+      { status: 400 }
+    )
+  }
 }

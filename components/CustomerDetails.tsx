@@ -9,10 +9,16 @@ import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
 
-function CustomerDetails({ userData, listData }: { userData: any; listData: any }) {
+function CustomerDetails({
+  userData,
+  listData,
+}: {
+  userData: any
+  listData: any
+}) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const {data,remainDues} = listData
+  const { dueData, remainDues } = listData
 
   useEffect(() => {
     dispatch(
@@ -20,7 +26,7 @@ function CustomerDetails({ userData, listData }: { userData: any; listData: any 
         id: userData.data.id,
         name: userData.data.name,
         mobile: userData.data.mobile,
-        dueList: data,
+        dueList: dueData,
       })
     )
   }, [listData, dispatch])
@@ -49,14 +55,14 @@ function CustomerDetails({ userData, listData }: { userData: any; listData: any 
       <div className="flex flex-col  items-center justify-center  w-full">
         <List
           height={550}
-          itemCount={data.length}
+          itemCount={dueData.length}
           itemSize={76 + 10}
           width={'100%'}
-          itemData={data}
+          itemData={dueData}
           className="  bg-first rounded shadow"
         >
           {({ index, style }) => {
-            const item = data[index]
+            const item = dueData[index]
             if (item.dues_type === 'payment') {
               return <ListWithPayment style={style} item={item} />
             }
@@ -74,7 +80,7 @@ function CustomerDetails({ userData, listData }: { userData: any; listData: any 
       </div>
       <div className=" fixed  bottom-13 grid grid-rows-2 items-center justify-center w-full">
         <h2 className="text-2xl  pl-8 tracking-wider pb-2 font-semibold text-gray-400">
-          Total Dues: Rs:{ remainDues }
+          Total Dues: Rs:{remainDues}
         </h2>
         <div className="flex flex-cols gap-6  w-full">
           <Button onClick={handleDues} className="bg-second px-10 text-white ">

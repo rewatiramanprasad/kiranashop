@@ -1,16 +1,29 @@
-import { getMemberById } from "@/server/duesModel";
-import { NextRequest, NextResponse } from "next/server";
+import { getMemberById } from '@/server/duesModel'
+import { type NextRequest, NextResponse } from 'next/server'
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = await params;
-    console.log("logging from memberRoute",id)
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const id = (await params).id
 
-    const res = await getMemberById(id);
+    const res = await getMemberById(Number(id))
     console.log(res)
     if (!res || res.length === 0) {
-        return NextResponse.json({ success: false, message: "Member not found" }, { status: 404 });
+      throw new Error('Member not found')
     }
-    return NextResponse.json({ data: res[0], success: true, message: `Member with ID ${id} fetched successfully` }, { status: 200 });
-
-    
+    return NextResponse.json(
+      {
+        data: res[0],
+        success: true,
+        message: `Member with ID ${id} fetched successfully`,
+      },
+      { status: 200 }
+    )
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'An unexpected error occurred'
+    return NextResponse.json({ message }, { status: 404 })
+  }
 }
