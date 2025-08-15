@@ -9,7 +9,6 @@ export async function GET(
     const id = (await params).id
 
     const res = await getMemberById(Number(id))
-    console.log(res)
     if (!res || res.length === 0) {
       throw new Error('Member not found')
     }

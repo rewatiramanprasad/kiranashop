@@ -23,7 +23,6 @@ const customerDetailsSlice = createSlice({
         },
         setCustomerDetails: (state, action) => {
             const { id, name, mobile, dueList } = action.payload;
-            console.log('logging from customerDetailsSlice :', action.payload);
             state.id = id;
             state.name = name;
             state.mobile = mobile;
