@@ -7,8 +7,9 @@ import { Form } from '@/components/ui/form'
 import Container from '@/components/container'
 import Heading from '@/components/heading'
 import FormInput from '@/components/formInput'
-import React from 'react'
+import React, { use } from 'react'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   Name: z.string().min(2, {
@@ -26,6 +27,7 @@ const formSchema = z.object({
 })
 
 function AddCustomer() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,6 +54,7 @@ function AddCustomer() {
       } else {
         throw new Error('Failed to add customer')
       }
+      router.push('/list')
     } catch (error) {
       console.error('Error adding customer:', error)
       toast.error('Failed to add customer. Please try again.')
