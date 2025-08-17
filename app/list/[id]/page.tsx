@@ -1,12 +1,37 @@
 import Container from '@/components/container'
 import CustomerDetails from '@/components/customerDetail'
 import React from 'react'
+export interface dueItem {
+  id: string
+  member_id: string
+  amount: number
+  remarks?: string
+  is_paid: boolean
+  dues_type: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface TotalItem {
+  remaindues: number
+}
+
+export interface ListData {
+  dueData: dueItem[]
+  remainDues: TotalItem
+}
+
+interface response {
+  data: ListData
+  success: boolean
+  message: string
+}
 
 async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   try {
     const res = await fetch(`http://localhost:3000/api/list/${id}`)
-    const data = await res.json()
+    const data:response = await res.json()
     const userData = await fetch(`http://localhost:3000/api/member/${id}`)
     const memberData = await userData.json()
     if (data.success === false || memberData.success === false) {

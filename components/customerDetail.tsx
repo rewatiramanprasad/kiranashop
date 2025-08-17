@@ -8,13 +8,14 @@ import ListWithPayment from './listWithPayments'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
+import { ListData } from '@/app/list/[id]/page'
 
 function CustomerDetails({
   userData,
   listData,
 }: {
   userData: any
-  listData: any
+  listData:ListData
 }) {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -80,7 +81,7 @@ function CustomerDetails({
       </div>
       <div className=" fixed  bottom-13 grid grid-rows-2 items-center justify-center w-full">
         <h2 className="text-2xl  pl-8 tracking-wider pb-2 font-semibold text-gray-400">
-          Total Dues: Rs:{remainDues}
+          Total Dues: Rs:{remainDues.remaindues}
         </h2>
         <div className="flex flex-cols gap-6  w-full">
           <Button onClick={handleDues} className="bg-second px-10 text-white ">

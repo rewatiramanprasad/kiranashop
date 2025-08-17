@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: number }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const paramRes = await params
@@ -14,10 +14,12 @@ export async function GET(
     }
     const dueData = await getDuesById(id)
     const totalAmount = await getTotalAmountById(id)
+    const remainDues = totalAmount[0]
     if (!dueData) {
       throw new Error('Something went wrong while fetching dues data')
     }
-    const data = { dueData, totalAmount }
+    console.log('totalAmount:', totalAmount)
+    const data = { dueData, remainDues }
     return NextResponse.json(
       {
         data: data,

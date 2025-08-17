@@ -1,15 +1,21 @@
-import knex from 'knex'
-import config from './config.json'
-// export const db = knex({
-//   client: 'sqlite3',
-//   connection: {
-//     filename: 'dues.sqlite3',
-//   },
-//   useNullAsDefault: true,
-// })
+import knex, { Knex } from 'knex'
+// if (process.env.stage === 'development') {
+//   // export const db = knex({
+//   //   client: 'sqlite3',
+//   //   connection: {
+//   //     filename: 'dues.sqlite3',
+//   //   },
+//   //   useNullAsDefault: true,
+//   // })
+// }
+let db: Knex
 
-export const db = knex({
-  client: 'pg',
-  connection: config.database.string,
-  searchPath: ['knex', 'public'],
-})
+if (process.env.stage === 'production' || process.env.stage === 'development') {
+  db = knex({
+    client: 'pg',
+    connection: process.env.connectionString,
+    searchPath: ['knex', 'public'],
+  })
+}
+
+export { db }

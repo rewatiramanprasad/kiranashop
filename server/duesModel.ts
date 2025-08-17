@@ -74,26 +74,27 @@ export const getDuesList = async () => {
     .orderBy('duesmember.name', 'asc')
 }
 
-export const getDuesById = async (id: number) => {
+export const getDuesById = async (id: string) => {
   return db<Dues>('dues').where('member_id', id).orderBy('createdAt', 'asc')
 }
 
-export const getTotalAmountById = async (id: number) => {
+export const getTotalAmountById = async (id: string) => {
   return db<Dues>('dues')
     .where('member_id', id)
     .select(
       db.raw(
-        'sum(amount)-sum(case when is_paid then amount else 0 end)- sum(case when dues_type then amount else 0 end) as remainDues '
+        `(sum(amount)-sum(case when is_paid=true then amount else 0 end)-sum(case when dues_type='payment' then amount else 0 end)) as remainDues`
       )
     )
+    .groupBy('member_id')
 }
 
-export const getMemberById = async (id: number) => {
+export const getMemberById = async (id: string) => {
   return db<DuesMember>('duesmember')
     .select('id', 'name', 'mobile')
     .where('id', id)
 }
-export const deleteProduct = async (id: number) => {
+export const deleteProduct = async (id: string) => {
   return db<Dues>('dues').delete().where('id', id)
 }
 
