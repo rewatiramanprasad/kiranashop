@@ -47,7 +47,6 @@ async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
       `http://localhost:3000/api/member/${id}`
     )
     const memberData: MemberDataResponse = await userData.json()
-    console.log('logging from Member Data:', memberData)
     if (data.success === false || memberData.success === false) {
       if (data.success === false) {
         throw new Error(data.message)
