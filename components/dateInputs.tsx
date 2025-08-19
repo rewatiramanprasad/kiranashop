@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 
 function DateInput(form: any) {
-    const [date, setDate] = React.useState<Date>(new Date())
+    const [date] = React.useState<Date>(new Date())
   return (
     <FormField
       control={form.control}

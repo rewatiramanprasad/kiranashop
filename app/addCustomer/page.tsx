@@ -24,11 +24,12 @@ const formSchema = z.object({
   Remarks: z.string().min(2, {
     message: 'Remarks must be at least 2 characters.',
   }),
+  
 })
-
+ type formSchemaType = z.infer<typeof formSchema>
 function AddCustomer() {
   const router = useRouter()
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       Name: '',
@@ -37,7 +38,7 @@ function AddCustomer() {
       Remarks: '',
     },
   })
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: formSchemaType) {
     try {
       const response = await fetch('http://localhost:3000/api/addCustomer', {
         method: 'POST',
@@ -70,29 +71,29 @@ function AddCustomer() {
           onReset={() => form.reset()}
           className="space-y-8"
         >
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Name'}
-            placeholder="Name..."
-            type="text"
+            placeHolder="Name..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Mobile'}
-            placeholder="Mobile..."
-            type="text"
+            placeHolder="Mobile..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Amount'}
-            placeholder="Amount..."
-            type="text"
+            placeHolder="Amount..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Remarks'}
-            placeholder="Remarks..."
-            type="text"
+            placeHolder="Remarks..."
+            formType="text"
           />
           <div className="flex justify-center gap-2 items-center">
             <Button className="w-1/2 bg-second " type="submit">

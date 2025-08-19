@@ -29,6 +29,8 @@ const formSchema = z.object({
   }),
 })
 
+type formSchemaType = z.infer<typeof formSchema>
+
 function AddDue({ id }: { id?: string }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -72,29 +74,29 @@ function AddDue({ id }: { id?: string }) {
           onReset={() => form.reset()}
           className="space-y-8"
         >
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Name'}
-            placeholder="Name..."
-            type="text"
+            placeHolder="Name..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Mobile'}
-            placeholder="Mobile..."
-            type="text"
+            placeHolder="Mobile..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Amount'}
-            placeholder="Amount..."
-            type="text"
+            placeHolder="Amount..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Remarks'}
-            placeholder="Remarks..."
-            type="text"
+            placeHolder="Remarks..."
+            formType="text"
           />
           <DateInput form={form} />
 

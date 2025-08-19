@@ -18,7 +18,7 @@ const formSchema = z.object({
   Name: z.string().min(2, {
     message: 'Name must be at least 2 characters.',
   }),
-  Mobile: z.number().min(10, {
+  Mobile: z.string().min(10, {
     message: 'Mobile number must be at least 10 characters.',
   }),
   Amount: z.string().min(1, {
@@ -31,23 +31,24 @@ const formSchema = z.object({
     message: 'Date cannot be in the future.',
   }),
 })
+type formSchemaType = z.infer<typeof formSchema>
 
 function AddDue() {
   const router = useRouter()
   const id = useSelector((state: RootState) => state.CustomerDetails.id)
   const name = useSelector((state: RootState) => state.CustomerDetails.name)
   const mobile = useSelector((state: RootState) => state.CustomerDetails.mobile)
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       Name: name || '',
-      Mobile: parseInt(mobile),
+      Mobile: mobile,
       Amount: '',
       Remarks: '',
       Date: new Date(),
     },
   })
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: formSchemaType) {
     try {
       const response = await fetch('http://localhost:3000/api/addDues', {
         method: 'POST',
@@ -80,31 +81,31 @@ function AddDue() {
           onReset={() => form.reset()}
           className="space-y-8"
         >
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Name'}
-            placeholder="Name..."
-            type="text"
+            placeHolder="Name..."
+            formType="text"
             disabled
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Mobile'}
-            placeholder="Mobile..."
-            type="text"
+            placeHolder="Mobile..."
+            formType="text"
             disabled
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Amount'}
-            placeholder="Amount..."
-            type="text"
+            placeHolder="Amount..."
+            formType="text"
           />
-          <FormInput
+          <FormInput<formSchemaType>
             form={form}
             fieldName={'Remarks'}
-            placeholder="Remarks..."
-            type="text"
+            placeHolder="Remarks..."
+            formType="text"
           />
           <DateInput form={form} />
 

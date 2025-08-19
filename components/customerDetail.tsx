@@ -30,7 +30,7 @@ function CustomerDetails({
         dueList: dueData,
       })
     )
-  }, [listData, dispatch])
+  }, [userData, dispatch])
 
   const handlePaid = (id: string) => {
     // Logic to handle marking an item as paid
