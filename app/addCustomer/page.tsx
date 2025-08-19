@@ -48,7 +48,6 @@ function AddCustomer() {
         body: JSON.stringify(values),
       })
       const resData = await response.json()
-      console.log(resData)
       if (resData.success) {
         form.reset()
         toast.info('Customer added successfully')

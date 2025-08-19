@@ -52,7 +52,7 @@ function AddDue({ id }: { id?: string }) {
         body: JSON.stringify({ ...values, id }),
       })
       const resData = await response.json()
-      console.log(resData)
+      
       if (resData.success) {
         form.reset()
         toast.info('Customer added successfully')

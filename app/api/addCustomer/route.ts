@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  console.log('Received data:', body)
   const res = await createCustomer({
     name: body.Name,
     mobile: body.Mobile,

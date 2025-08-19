@@ -2,7 +2,6 @@ import { createDues, Dues } from '@/server/duesModel'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    console.log('Received data in add dues routes:', body)
     // Validate the data if necessary
     // const parsedData = formSchema.parse(body);
     const { id, Amount, Remarks } = body

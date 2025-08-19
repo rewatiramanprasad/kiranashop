@@ -18,7 +18,7 @@ export async function GET(
     if (!dueData) {
       throw new Error('Something went wrong while fetching dues data')
     }
-    console.log('totalAmount:', totalAmount)
+  
     const data = { dueData, remainDues }
     return NextResponse.json(
       {
