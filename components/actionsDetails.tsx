@@ -2,7 +2,8 @@
 import React from 'react'
 import Heading from './heading'
 import { Button } from './ui/button'
-import { ActionItem } from '@/app/action/page'
+import { ActionItem } from '@/server/action'
+
 
 function ActionDetails({ data }: { data: ActionItem[] }) {
   const handleExport = () => {

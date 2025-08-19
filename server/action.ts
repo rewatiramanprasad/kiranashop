@@ -1,4 +1,28 @@
-import { maxDues, minDues, totalDues } from './duesModel'
+import {
+  fetchAllMembersData,
+  getContact,
+  maxDues,
+  minDues,
+  totalDues,
+} from './duesModel'
+
+export interface ActionItem {
+  id: string
+  name: string
+  mobile: string
+  amount: number
+  remarks: string
+  is_paid: boolean
+  dues_type: string
+  createdAt: string
+  updateAt: string
+}
+
+export interface ContactItem {
+  id?: string
+  name: string
+  mobile: number
+}
 
 export async function dashboardAction(): Promise<{
   maxDues: string
@@ -18,5 +42,24 @@ export async function dashboardAction(): Promise<{
   } catch (error) {
     console.error(error)
     throw new Error('Unable to fetch dashboard data')
+  }
+}
+
+export async function exportAction(): Promise<ActionItem[]> {
+  try {
+    const memberData: ActionItem[] = await fetchAllMembersData()
+    return memberData
+  } catch (error) {
+    console.error(error)
+    throw new Error('failed to fetch Action data')
+  }
+}
+export async function contactAction(): Promise<ContactItem[]> {
+  try {
+    const contactData: ContactItem[] = await getContact()
+    return contactData
+  } catch (error) {
+    console.error(error)
+    throw new Error('failed to fetch contact data')
   }
 }

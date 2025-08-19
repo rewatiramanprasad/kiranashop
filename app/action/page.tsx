@@ -1,35 +1,37 @@
 import ActionDetails from '@/components/actionsDetails'
 import Container from '@/components/container'
+import { ActionItem, exportAction } from '@/server/action'
 import React from 'react'
 
-export interface ActionItem {
-  id: number
-  name: string
-  mobile: number
-  amount: number
-  remarks: string | null
-  is_paid: number
-  dues_type: string
-  createdAt: Date
-  updateAt: string
-}
+// export interface ActionItem {
+//   id: number
+//   name: string
+//   mobile: number
+//   amount: number
+//   remarks: string | null
+//   is_paid: number
+//   dues_type: string
+//   createdAt: Date
+//   updateAt: string
+// }
 
-export interface ActionResponse {
-  data: ActionItem[]
-  success: boolean
-  message: string
-}
+// export interface ActionResponse {
+//   data: ActionItem[]
+//   success: boolean
+//   message: string
+// }
 
 async function ActionPage() {
   try {
-    const res = await fetch('http://localhost:3000/api/action')
-    const data: ActionResponse = await res.json()
-    if (data.success === false) {
-      throw new Error(data.message)
-    }
+    // const res = await fetch('http://localhost:3000/api/action')
+    // const data: ActionResponse = await res.json()
+    // if (data.success === false) {
+    //   throw new Error(data.message)
+    // }
+    const response: ActionItem[] = await exportAction()
     return (
       <Container>
-        <ActionDetails data={data.data} />
+        <ActionDetails data={response} />
       </Container>
     )
   } catch (error) {

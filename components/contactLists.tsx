@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setContacts } from '@/app/lib/contactSlice'
 import { setContactSearchTerm } from '@/app/lib/FilterListSlice'
 import { ContactFilterSelector } from '@/app/lib/FilterSelector'
-import { ContactItem } from '@/app/contact/page'
+import { ContactItem } from '@/server/action'
 
 function ContactList({ data }: { data: ContactItem[] }) {
   const dispatch = useDispatch()
