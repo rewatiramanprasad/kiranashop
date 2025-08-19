@@ -8,14 +8,14 @@ import knex, { Knex } from 'knex'
 //   //   useNullAsDefault: true,
 //   // })
 // }
-let db: Knex
+// let db: Knex
 
-if (process.env.stage === 'production' || process.env.stage === 'development') {
-  db = knex({
-    client: 'pg',
-    connection: process.env.connectionString,
-    searchPath: ['knex', 'public'],
-  })
-}
+// if (process.env.stage === 'production' || process.env.stage === 'development') {
+export const db = knex({
+  client: 'pg',
+  connection: process.env.connectionstring,
+  searchPath: ['knex', 'public'],
+})
+// }
 
-export { db }
+// export { db }
