@@ -16,17 +16,22 @@ import {
 import { format } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form'
 
-function DateInput(form: any) {
-    const [date] = React.useState<Date>(new Date())
+type DateInputProps<T extends FieldValues> = {
+  form: UseFormReturn<T>
+  fieldName: Path<T>
+}
+
+function DateInput<T extends FieldValues>({ form, fieldName }: DateInputProps<T>) {
+  // const [date] = React.useState<Date>(new Date())
   return (
     <FormField
       control={form.control}
-          name="dob"
-          defaultValue={date}
+      name={fieldName}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className='text-white'>Date</FormLabel>
+          <FormLabel className="text-white">Date</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -42,7 +47,7 @@ function DateInput(form: any) {
                   ) : (
                     <span>Pick a date</span>
                   )} */}
-                    { format(field.value, 'PPP') }
+                  {format(field.value, 'PPP')}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </FormControl>
@@ -50,8 +55,7 @@ function DateInput(form: any) {
             <PopoverContent className="w-auto p-0" align="start">
               <Calendar
                 mode="single"
-                
-                selected={field.value}
+                selected={field.value??new Date()}
                 onSelect={field.onChange}
                 disabled={(date) =>
                   date > new Date() || date < new Date('1900-01-01')

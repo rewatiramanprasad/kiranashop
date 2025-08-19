@@ -105,7 +105,7 @@ function AddPayment() {
             placeHolder="Remarks..."
             formType="text"
           />
-          <DateInput form={form} />
+          <DateInput<formSchemaType> form={form} fieldName='Date' />
 
           <div className="flex justify-center gap-2 items-center">
             <Button className="w-1/2 bg-second " type="submit">
