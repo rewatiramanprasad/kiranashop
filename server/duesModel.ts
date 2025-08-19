@@ -106,7 +106,7 @@ export const maxDues = async () => {
   const data = await db.raw(
     `select member_id,(sum(amount)-sum(case when is_paid=true  then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues desc limit 1`
   )
-  console.log('maxDues data:', data)
+  
   const id = data.rows[0].member_id
   if (id === undefined) {
     throw new Error('id is undefined in maxDues')
