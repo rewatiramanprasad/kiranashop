@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setList } from '@/app/lib/ListSlice'
 import { setSearchTerm } from '@/app/lib/FilterListSlice'
 import { SearchFilterSelector } from '@/app/lib/FilterSelector'
+import { ListItem } from '@/app/list/page'
 
-function SearchAndList({ data }: { data: any[] }) {
+function SearchAndList({ data }: { data: ListItem[] }) {
   const dispatch = useDispatch()
   //we can use useSelector to get the data from the store, but here we are passing it as a prop
   const handleSearch = (str: string) => {
