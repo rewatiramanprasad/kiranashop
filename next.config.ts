@@ -20,19 +20,18 @@ const nextConfig = (phase: string): NextConfig => {
   if (phase === PHASE_PRODUCTION_BUILD || phase === PHASE_PRODUCTION_SERVER) {
     loadEnvFile('production')
 
-
-    if (process.env.ENV === 'staging') {
-      loadEnvFile('staging')
-    }
+    // if (process.env.ENV === 'staging') {
+    //   loadEnvFile('staging')
+    // }
   }
 
   return {
     reactStrictMode: true,
     serverExternalPackages: ['knex'],
     env: {
-      NEXT_PUBLIC_STAGE: process.env.stage,
-      NEXT_PUBLIC_CONNECTION_STRING: process.env.CONNECTION_STRING,
-      NEXT_PUBLIC_BASE_URL: process.env.host,
+      NEXT_PUBLIC_STAGE: process.env.NEXT_PUBLIC_STAGE,
+      connectionstring: process.env.connectionstring,
+      // NEXT_PUBLIC_BASE_URL: process.env.host,
       // NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
       // NEXT_PUBLIC_LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
     },
