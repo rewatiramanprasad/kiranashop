@@ -1,12 +1,13 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
+import { dueItem } from '@/app/list/[id]/page'
 
 function ListWithPayment({
   style,
   item,
 }: {
   style: React.CSSProperties
-  item: any
+  item: dueItem
 }) {
   return (
     <div

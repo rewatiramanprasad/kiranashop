@@ -1,5 +1,6 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
+import { dueItem } from '@/app/list/[id]/page'
 
 function ListWithoutStrike({
   style,
@@ -7,9 +8,9 @@ function ListWithoutStrike({
   handlePaid,
 }: {
   style: React.CSSProperties
-  item: any
+  item: dueItem
   handlePaid: (id: string) => void
-}) {
+  }) {
   return (
     <div
       style={style}
