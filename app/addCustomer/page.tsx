@@ -7,7 +7,7 @@ import { Form } from '@/components/ui/form'
 import Container from '@/components/container'
 import Heading from '@/components/heading'
 import FormInput from '@/components/formInput'
-import React, { use } from 'react'
+import React from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
