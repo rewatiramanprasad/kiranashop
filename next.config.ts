@@ -31,7 +31,8 @@ const nextConfig = (phase: string): NextConfig => {
     serverExternalPackages: ['knex'],
     env: {
       NEXT_PUBLIC_STAGE: process.env.stage,
-      NEXT_PUBLIC_CONNECTION_STRING: process.env.CONNECTION_STRING ,
+      NEXT_PUBLIC_CONNECTION_STRING: process.env.CONNECTION_STRING,
+      NEXT_PUBLIC_BASE_URL: process.env.host,
       // NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
       // NEXT_PUBLIC_LOG_LEVEL: process.env.NEXT_PUBLIC_LOG_LEVEL,
     },

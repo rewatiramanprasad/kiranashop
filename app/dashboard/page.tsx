@@ -1,28 +1,14 @@
 import Container from '@/components/container'
+import { dashboardAction } from '@/server/action'
 import React from 'react'
-type DashboardResponse = {
-  data: { maxDues: string; minDues: string; total: string }
-  success: boolean
-  message: string
-}
+
 async function DashboardPage() {
   try {
-    const response = await fetch('http://localhost:3000/api/dashboard', {
-      cache: 'default',
-    })
-
-    const res: DashboardResponse = await response.json()
-
-    if (!res.success) {
-      throw new Error(res.message || 'Failed to fetch dashboard data')
-    }
-    if (!res.data) {
-      throw new Error('No data found for dashboard')
-    }
+    const response = await dashboardAction()
     const data = [
-      { heading: 'Total dues', data: `Rs. ${res.data.total}/-` },
-      { heading: 'Maximum dues', data: res.data.maxDues },
-      { heading: 'Minimum dues', data: res.data.minDues },
+      { heading: 'Total dues', data: `Rs. ${response.total}/-` },
+      { heading: 'Maximum dues', data: response.maxDues },
+      { heading: 'Minimum dues', data: response.minDues },
     ]
     return (
       <div className="bg-first min-h-screen ">
