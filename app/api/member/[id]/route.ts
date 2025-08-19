@@ -21,6 +21,7 @@ export async function GET(
       { status: 200 }
     )
   } catch (error) {
+    console.error(error)
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred'
     return NextResponse.json(
