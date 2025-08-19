@@ -41,16 +41,19 @@ export async function dashboardAction(): Promise<{
     return data
   } catch (error) {
     console.error(error)
-    throw new Error('Unable to fetch dashboard data')
+    console.log(error)
+    throw new Error('failed to fetch the data')
   }
 }
 
 export async function exportAction(): Promise<ActionItem[]> {
   try {
     const memberData: ActionItem[] = await fetchAllMembersData()
+    console.log(memberData)
     return memberData
   } catch (error) {
     console.error(error)
+    console.log(error)
     throw new Error('failed to fetch Action data')
   }
 }
