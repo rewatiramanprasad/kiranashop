@@ -8,14 +8,14 @@ import ListWithPayment from './listWithPayments'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
-import { ListData } from '@/app/list/[id]/page'
+import { ListData, MemberItem } from '@/app/list/[id]/page'
 
 function CustomerDetails({
   userData,
   listData,
 }: {
-  userData: any
-  listData:ListData
+  userData: MemberItem
+  listData: ListData
 }) {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -24,9 +24,9 @@ function CustomerDetails({
   useEffect(() => {
     dispatch(
       setCustomerDetails({
-        id: userData.data.id,
-        name: userData.data.name,
-        mobile: userData.data.mobile,
+        id: userData.id,
+        name: userData.name,
+        mobile: userData.mobile,
         dueList: dueData,
       })
     )
@@ -38,19 +38,19 @@ function CustomerDetails({
     console.log(`Item with id ${id} marked as paid`)
   }
   const handleDues = () => {
-    router.push(`/list/${userData.data.id}/addDues`)
+    router.push(`/list/${userData.id}/addDues`)
   }
   const handlePayment = () => {
-    router.push(`/list/${userData.data.id}/addPayment`)
+    router.push(`/list/${userData.id}/addPayment`)
   }
   return (
     <div className=" relative flex flex-col items-center justify-center gap-2">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold tracking-wider text-white">
-          {userData.data.name}
+          {userData.name}
         </h1>
         <h2 className="text-xl  font-semibold text-gray-400">
-          {userData.data.mobile}
+          {userData.mobile}
         </h2>
       </div>
       <div className="flex flex-col  items-center justify-center  w-full">

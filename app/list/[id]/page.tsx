@@ -21,19 +21,33 @@ export interface ListData {
   remainDues: TotalItem
 }
 
-interface response {
+export interface ListDataResponse {
   data: ListData
   success: boolean
   message: string
 }
 
+export interface MemberDataResponse {
+  data: MemberItem
+  success: boolean
+  message: string
+}
+export interface MemberItem {
+  id: string
+  name: string
+  mobile: string
+}
+
 async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   try {
-    const res = await fetch(`http://localhost:3000/api/list/${id}`)
-    const data:response = await res.json()
-    const userData = await fetch(`http://localhost:3000/api/member/${id}`)
-    const memberData = await userData.json()
+    const res: Response = await fetch(`http://localhost:3000/api/list/${id}`)
+    const data: ListDataResponse = await res.json()
+    const userData: Response = await fetch(
+      `http://localhost:3000/api/member/${id}`
+    )
+    const memberData: MemberDataResponse = await userData.json()
+    console.log('logging from Member Data:', memberData)
     if (data.success === false || memberData.success === false) {
       if (data.success === false) {
         throw new Error(data.message)
@@ -45,7 +59,7 @@ async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
 
     return (
       <Container>
-        <CustomerDetails listData={data.data} userData={memberData} />
+        <CustomerDetails listData={data.data} userData={memberData.data} />
       </Container>
     )
   } catch (error) {
