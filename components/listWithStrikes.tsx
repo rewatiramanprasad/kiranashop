@@ -1,13 +1,13 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
-import { dueItem } from '@/app/list/[id]/page'
+import { Dues } from '@/server/duesModel'
 
 function ListWithStrike({
   style,
   item,
 }: {
   style: React.CSSProperties
-  item: dueItem
+  item: Dues
 }) {
   return (
     <div
@@ -18,7 +18,7 @@ function ListWithStrike({
       <Checkbox checked className="bg-second" />
       <div className="pt-0">
         <h2 className="text-lg font-semibold">
-          <s>{item.createdAt}</s>
+          <s>{new Date(item.createdAt!).toLocaleDateString()}</s>
         </h2>
         <article className="text-lg">
           <s>

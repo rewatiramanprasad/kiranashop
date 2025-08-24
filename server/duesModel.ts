@@ -51,46 +51,59 @@ export async function createDues(item: Dues) {
 export async function createPayment(item: Dues) {
   return db<Dues>('dues').insert(item)
 }
-
-export const getDuesList = async () => {
+export type ListItem = {
+  name: string
+  mobile: string
+  id: string
+  updateAt: string
+  amount: number
+}
+export const getDuesList = async (): Promise<ListItem[]> => {
   return await db<Dues>('dues')
-    .groupBy('member_id')
     .join('duesmember', 'dues.member_id', 'duesmember.id')
     .select(
       'duesmember.name',
       'duesmember.mobile',
-      'dues.member_id',
-      'dues.updateAt',
+      'duesmember.id',
+      db.raw(`max('dues.updateAt') as update`),
       db.raw(
         `sum(amount)-sum(case when is_paid= true then amount else 0 end)- sum(case when dues_type= 'payment' then amount else 0 end) as amount`
       )
     )
-    .groupBy(
-      'duesmember.name',
-      'duesmember.mobile',
-      'dues.member_id',
-      'dues.updateAt'
-    )
-    .orderBy('duesmember.name', 'asc')
+    .groupBy('duesmember.name', 'duesmember.mobile', 'duesmember.id')
+    .orderBy('update', 'asc')
+
+  
 }
 
-export const getDuesById = async (id: string) => {
-  return db<Dues>('dues').where('member_id', id).orderBy('createdAt', 'asc')
+export const getDuesById = async (id: string): Promise<Dues[]> => {
+  return await db<Dues>('dues')
+    .where('member_id', id)
+    .orderBy('createdAt', 'asc')
 }
-
-export const getTotalAmountById = async (id: string) => {
-  return db<Dues>('dues')
+export interface TotalDues {
+  remainDues: number
+}
+export const getTotalAmountById = async (id: string): Promise<TotalDues[]> => {
+  return await db<Dues>('dues')
     .where('member_id', id)
     .select(
       db.raw(
-        `(sum(amount)-sum(case when is_paid=true then amount else 0 end)-sum(case when dues_type='payment' then amount else 0 end)) as remainDues`
+        ` SUM(amount) 
+    - SUM(CASE WHEN is_paid = true THEN amount ELSE 0 END) 
+    - SUM(CASE WHEN dues_type = 'payment' THEN amount ELSE 0 END)
+  as "remainDues"`
       )
     )
     .groupBy('member_id')
 }
-
-export const getMemberById = async (id: string) => {
-  return db<DuesMember>('duesmember')
+export interface DetailsItem {
+  name: string
+  id?: string | undefined
+  mobile: number
+}
+export const getMemberById = async (id: string): Promise<DetailsItem[]> => {
+  return await db<DuesMember>('duesmember')
     .select('id', 'name', 'mobile')
     .where('id', id)
 }
@@ -106,7 +119,7 @@ export const maxDues = async () => {
   const data = await db.raw(
     `select member_id,(sum(amount)-sum(case when is_paid=true  then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues desc limit 1`
   )
-  
+
   const id = data.rows[0].member_id
   if (id === undefined) {
     throw new Error('id is undefined in maxDues')

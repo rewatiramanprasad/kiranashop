@@ -8,18 +8,13 @@ import ListWithPayment from './listWithPayments'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
-import { ListData, MemberItem } from '@/app/list/[id]/page'
+import { CustDetailsActionResponse } from '@/server/action'
 
-function CustomerDetails({
-  userData,
-  listData,
-}: {
-  userData: MemberItem
-  listData: ListData
-}) {
+function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { dueData, remainDues } = listData
+  const { dueData, totalAmount, details } = data
+  const userData=details[0]
 
   useEffect(() => {
     dispatch(
@@ -30,7 +25,7 @@ function CustomerDetails({
         dueList: dueData,
       })
     )
-  }, [userData,dueData, dispatch])
+  }, [userData, dueData, dispatch])
 
   const handlePaid = (id: string) => {
     // Logic to handle marking an item as paid
@@ -81,7 +76,7 @@ function CustomerDetails({
       </div>
       <div className=" fixed  bottom-13 grid grid-rows-2 items-center justify-center w-full">
         <h2 className="text-2xl  pl-8 tracking-wider pb-2 font-semibold text-gray-400">
-          Total Dues: Rs:{remainDues.remaindues}
+          Total Dues: Rs:{totalAmount[0].remainDues}
         </h2>
         <div className="flex flex-cols gap-6  w-full">
           <Button onClick={handleDues} className="bg-second px-10 text-white ">

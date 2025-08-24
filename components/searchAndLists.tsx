@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setList } from '@/app/lib/ListSlice'
 import { setSearchTerm } from '@/app/lib/FilterListSlice'
 import { SearchFilterSelector } from '@/app/lib/FilterSelector'
-import { ListItem } from '@/app/list/page'
+import { ListItem } from '@/server/duesModel'
 
 function SearchAndList({ data }: { data: ListItem[] }) {
   const dispatch = useDispatch()
@@ -20,7 +20,6 @@ function SearchAndList({ data }: { data: ListItem[] }) {
 
   useEffect(() => {
     dispatch(setList(data))
-    // dispatch()
   }, [data, dispatch])
   return (
     <div className="flex flex-col items-center">
@@ -35,12 +34,12 @@ function SearchAndList({ data }: { data: ListItem[] }) {
       >
         {({ index, style }) => {
           const item = filterData[index]
-
+          console.log(item)
           return (
-            <Link href={`/list/${item.member_id}`}>
+            <Link href={`/list/${item.id}`}>
               <div
                 style={style}
-                key={item.member_id}
+                key={item.id}
                 className="p-4 border-y-8  border-first bg-third flex flex-row justify-between items-center"
               >
                 <div className="flex flex-col justify-center items-start  gap-2">

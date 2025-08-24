@@ -1,21 +1,8 @@
 import knex, { Knex } from 'knex'
-// if (process.env.stage === 'development') {
-//   // export const db = knex({
-//   //   client: 'sqlite3',
-//   //   connection: {
-//   //     filename: 'dues.sqlite3',
-//   //   },
-//   //   useNullAsDefault: true,
-//   // })
-// }
-// let db: Knex
-
-// if (process.env.stage === 'production' || process.env.stage === 'development') {
 export const db = knex({
   client: 'pg',
   connection: process.env.connectionstring,
-  searchPath: ['knex', 'public'],
+  // searchPath: ['knex', 'public'],
+  pool: { min: 0, max: 10 },
 })
-// }
 
-// export { db }

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
-import { dueItem } from '@/app/list/[id]/page'
+import { Dues } from '@/server/duesModel'
 
 function ListWithPayment({
   style,
   item,
 }: {
   style: React.CSSProperties
-  item: dueItem
+  item: Dues
 }) {
   return (
     <div
@@ -17,7 +17,9 @@ function ListWithPayment({
     >
       <Checkbox checked className="bg-third" />
       <div className="pt-0">
-        <h2 className="text-lg font-semibold">{item.createdAt}</h2>
+        <h2 className="text-lg font-semibold">
+          {new Date(item.createdAt!).toLocaleDateString()}
+        </h2>
         <article className="text-lg">
           {'Paid '} :<span>{' Rs.' + item.amount}</span>
         </article>

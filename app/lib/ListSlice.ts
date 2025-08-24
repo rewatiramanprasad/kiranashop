@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface List {
-  member_id: string
+  id: string
   name: string
   amount: number
   mobile: number
+  updateAt: string
 }
 
 const ListSlice = createSlice({

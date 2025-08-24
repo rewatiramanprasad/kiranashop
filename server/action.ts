@@ -1,10 +1,15 @@
 import {
+  Dues,
   fetchAllMembersData,
   getContact,
+  getDuesById,
+  getMemberById,
+  getTotalAmountById,
   maxDues,
   minDues,
   totalDues,
 } from './duesModel'
+import { DetailsItem, TotalDues } from './duesModel'
 
 export interface ActionItem {
   id: string
@@ -64,5 +69,31 @@ export async function contactAction(): Promise<ContactItem[]> {
   } catch (error) {
     console.error(error)
     throw new Error('failed to fetch contact data')
+  }
+}
+
+export interface CustDetailsActionResponse {
+  dueData: Dues[]
+  totalAmount: TotalDues[]
+  details: DetailsItem[]
+}
+
+export async function CustDetailsAction(
+  id: string
+): Promise<CustDetailsActionResponse> {
+  try {
+    const dueData = await getDuesById(id)
+    const totalAmount = await getTotalAmountById(id)
+    const details = await getMemberById(id)
+    const response = {
+      dueData,
+      totalAmount,
+      details,
+    }
+    console.log(response)
+    return response
+  } catch (error) {
+    console.error(error)
+    throw new Error('Failed to fetch the CustDetails data ')
   }
 }

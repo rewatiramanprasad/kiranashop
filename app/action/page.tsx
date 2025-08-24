@@ -23,11 +23,6 @@ import React from 'react'
 
 async function ActionPage() {
   try {
-    // const res = await fetch('http://localhost:3000/api/action')
-    // const data: ActionResponse = await res.json()
-    // if (data.success === false) {
-    //   throw new Error(data.message)
-    // }
     const response: ActionItem[] = await exportAction()
     return (
       <Container>

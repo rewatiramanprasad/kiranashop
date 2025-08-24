@@ -1,30 +1,19 @@
 import React from 'react'
 import Container from '@/components/container'
 import SearchAndList from '@/components/searchAndLists'
-export type ListItem = {
-  name: string
-  mobile: string
-  member_id: string
-  updateAt: Date
-  amount: number
-}
-type ListResponse = {
-  data: ListItem[],
-  success: boolean,
-  message:string
-}
+import { getDuesList } from '@/server/duesModel'
+
 async function ListPage() {
   try {
-    const res:Response = await fetch('http://localhost:3000/api/list')
-    const data:ListResponse = await res.json()
-    console.log("logging from listPage",data)
-    if (data.success === false) {
-      throw new Error(data.message || 'Failed to fetch list data')
+    const data = await getDuesList()
+    console.log(data)
+    if (data.length === 0) {
+      throw new Error('Failed to fetch list data')
     }
 
     return (
       <Container>
-        <SearchAndList data={data.data} />
+        <SearchAndList data={data} />
       </Container>
     )
   } catch (error) {
