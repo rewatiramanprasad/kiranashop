@@ -1,3 +1,4 @@
+'use server'
 import {
   createDues,
   createPayment,
@@ -47,9 +48,8 @@ export async function dashboardAction(): Promise<{
     }
     return data
   } catch (error) {
-    console.error(error)
     console.log(error)
-    throw new Error('failed to fetch the data')
+    throw new Error('failed to fetch dashboard data')
   }
 }
 
@@ -129,7 +129,7 @@ export async function AddDuesHandler(input: AddPaymentProps) {
       member_id: id,
       amount: amount,
       is_paid: false,
-      dues_type: 'payment',
+      dues_type: 'dues',
       remarks: remarks || null,
     } as Dues)
   } catch (error) {
