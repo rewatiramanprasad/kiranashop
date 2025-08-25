@@ -44,31 +44,12 @@ function AddPayment() {
       Name: name || '',
       Mobile: mobile,
       Amount: '',
-      Remarks: '',
+      Remarks: 'Paid',
       Date: new Date(),
     },
   })
   async function onSubmit(values: formSchemaType) {
-    // try {
-    //   const response = await fetch('http://localhost:3000/api/addDues', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ ...values, id }),
-    //   })
-    //   const resData = await response.json()
-    //   if (resData.success) {
-    //     form.reset()
-    //     toast.info('Payment added successfully')
-    //     router.back()
-    //   } else {
-    //     throw new Error('Failed to add Payment')
-    //   }
-    // } catch (error) {
-    //   console.error('Error adding payment:', error)
-    //   toast.error('Failed to add payment. Please try again.')
-    // }
+    
     console.log(values)
     try {
       await AddPaymentHandler({
@@ -79,6 +60,8 @@ function AddPayment() {
         date: values.Date,
         id: id,
       })
+      toast.info('Payment added successfully')
+      router.push(`/list/${id}`)
     } catch (error) {
       console.error('Error adding payment:', error)
       toast.error('Failed to add payment. Please try again.')

@@ -13,6 +13,7 @@ import DateInput from '@/components/dateInputs'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/lib/store'
 import { useRouter } from 'next/navigation'
+import { AddDuesHandler } from '@/server/action'
 
 const formSchema = z.object({
   Name: z.string().min(2, {
@@ -50,22 +51,17 @@ function AddDue() {
   })
   async function onSubmit(values: formSchemaType) {
     try {
-      const response = await fetch('http://localhost:3000/api/addDues', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...values, id }),
+      console.log(values)
+      await AddDuesHandler({
+        name: values.Name,
+        mobile: values.Mobile,
+        amount: Number(values.Amount),
+        remarks: values.Remarks,
+        date: values.Date,
+        id,
       })
-      const resData = await response.json()
-
-      if (resData.success) {
-        form.reset()
-        toast.info('Dues added successfully')
-        router.back()
-      } else {
-        throw new Error('Failed to add dues')
-      }
+      toast.info('Dues added successfully')
+      router.push(`/list/${id}`)
     } catch (error) {
       console.error('Error adding dues:', error)
       toast.error('Failed to add dues. Please try again.')
@@ -107,7 +103,7 @@ function AddDue() {
             placeHolder="Remarks..."
             formType="text"
           />
-          <DateInput<formSchemaType> form={form} fieldName={ 'Date'} />
+          <DateInput<formSchemaType> form={form} fieldName={'Date'} />
 
           <div className="flex justify-center gap-2 items-center">
             <Button className="w-1/2 bg-second " type="submit">
