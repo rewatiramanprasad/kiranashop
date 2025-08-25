@@ -1,4 +1,5 @@
 import {
+  createDues,
   createPayment,
   Dues,
   fetchAllMembersData,
@@ -116,3 +117,20 @@ export async function AddPaymentHandler(input: AddPaymentProps) {
     remarks: remarks || null,
   } as Dues)
 }
+export async function AddDuesHandler(input: AddPaymentProps) {
+  try {
+    const { id, name, mobile, amount, remarks, date } = input
+    await createDues({
+      member_id: id,
+      amount: amount,
+      is_paid: false,
+      dues_type: 'payment',
+      remarks: remarks || null,
+    } as Dues)
+  } catch (error) {
+    console.error(error)
+    throw new Error('Failed to add dues')
+  }
+}
+
+
