@@ -1,6 +1,7 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
 import { Dues } from '@/server/duesModel'
+import DateFormat from './date'
 
 function ListWithPayment({
   style,
@@ -18,7 +19,7 @@ function ListWithPayment({
       <Checkbox checked className="bg-third" />
       <div className="pt-0">
         <h2 className="text-lg font-semibold">
-          {new Date(item.createdAt!).toLocaleDateString()}
+          <DateFormat date={item.createdAt!} />
         </h2>
         <article className="text-lg">
           {'Paid '} :<span>{' Rs.' + item.amount}</span>

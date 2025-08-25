@@ -1,6 +1,7 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
 import { Dues } from '@/server/duesModel'
+import DateFormat from './date'
 
 function ListWithStrike({
   style,
@@ -18,7 +19,7 @@ function ListWithStrike({
       <Checkbox checked className="bg-second" />
       <div className="pt-0">
         <h2 className="text-lg font-semibold">
-          <s>{new Date(item.createdAt!).toLocaleDateString()}</s>
+          <s><DateFormat date={item.createdAt!} /></s>
         </h2>
         <article className="text-lg">
           <s>

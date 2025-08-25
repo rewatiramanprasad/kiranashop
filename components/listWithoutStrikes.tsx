@@ -1,6 +1,7 @@
 import React from 'react'
 import { Checkbox } from './ui/checkbox'
 import { Dues } from '@/server/duesModel'
+import DateFormat from './date'
 
 function ListWithoutStrike({
   style,
@@ -24,7 +25,9 @@ function ListWithoutStrike({
         className="bg-second text-white"
       />
       <div className="pt-0">
-        <h2 className="text-lg font-semibold">{new Date(item.createdAt!).toLocaleDateString()}</h2>
+        <h2 className="text-lg font-semibold">
+          <DateFormat date={item.createdAt!} />
+        </h2>
         <article className="text-lg">
           {item.remarks + ' '}:<span>{' Rs.' + item.amount}</span>
         </article>
