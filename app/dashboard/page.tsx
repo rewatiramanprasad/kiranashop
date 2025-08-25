@@ -35,7 +35,7 @@ async function DashboardPage() {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'An unexpected error occurred'
-    console.error('Error fetching ContactPage:', error)
+    console.error('Error fetching dashboard page:', error)
     return (
       <Container>
         <div className="text-red-500">
