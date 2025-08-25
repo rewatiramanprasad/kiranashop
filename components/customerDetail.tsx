@@ -50,7 +50,7 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
       </div>
       <div className="flex flex-col  items-center justify-center  w-full">
         <List
-          height={550}
+          height={490}
           itemCount={dueData.length}
           itemSize={76 + 10}
           width={'100%'}
@@ -74,8 +74,8 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
           }}
         </List>
       </div>
-      <div className=" fixed  bottom-13 grid grid-rows-2 items-center justify-center w-full">
-        <h2 className="text-2xl  pl-8 tracking-wider pb-2 font-semibold text-gray-400">
+      <div className="fixed bottom-13 grid grid-rows-2 items-center justify-center w-full">
+        <h2 className="text-2xl  pl-8 tracking-wider  font-semibold text-gray-400">
           Total Dues: Rs:{totalAmount[0].remainDues}
         </h2>
         <div className="flex flex-cols gap-6  w-full">
