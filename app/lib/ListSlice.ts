@@ -5,7 +5,7 @@ interface List {
   name: string
   amount: number
   mobile: number
-  updateAt: string
+  update: string
 }
 
 const ListSlice = createSlice({
@@ -17,7 +17,9 @@ const ListSlice = createSlice({
   },
   reducers: {
     setList: (state, action) => {
+      // console.log('its me filter list slice', action.payload)
       state.data = action.payload
+      // .data.map((item: List) => ({ id: item.id, name: item.name, amount: item.amount, mobile: item.mobile, update: new Date(item.update).toISOString() }))
     },
   },
 })
