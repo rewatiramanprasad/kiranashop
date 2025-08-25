@@ -11,7 +11,6 @@ function loadEnvFile(env: string) {
 }
 
 const nextConfig = (phase: string): NextConfig => {
-  console.log('Running phase:', phase)
 
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     loadEnvFile('development')

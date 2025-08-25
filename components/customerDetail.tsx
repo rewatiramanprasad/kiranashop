@@ -17,7 +17,6 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const userData = details[0]
 
   useEffect(() => {
-    console.log('getting from dueData', dueData)
     dispatch(
       setCustomerDetails({
         id: userData.id,

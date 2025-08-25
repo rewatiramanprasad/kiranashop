@@ -6,7 +6,6 @@ import React from 'react'
 
 async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  console.log('logging from cutDetails ', id)
   try {
     
     const data: CustDetailsActionResponse = await CustDetailsAction(id) 

@@ -51,7 +51,6 @@ function AddDue() {
   })
   async function onSubmit(values: formSchemaType) {
     try {
-      console.log(values)
       await AddDuesHandler({
         name: values.Name,
         mobile: values.Mobile,

@@ -17,7 +17,6 @@ const ListSlice = createSlice({
   },
   reducers: {
     setList: (state, action) => {
-      // console.log('its me filter list slice', action.payload)
       state.data = action.payload
       // .data.map((item: List) => ({ id: item.id, name: item.name, amount: item.amount, mobile: item.mobile, update: new Date(item.update).toISOString() }))
     },

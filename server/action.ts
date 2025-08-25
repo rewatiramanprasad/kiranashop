@@ -56,11 +56,9 @@ export async function dashboardAction(): Promise<{
 export async function exportAction(): Promise<ActionItem[]> {
   try {
     const memberData: ActionItem[] = await fetchAllMembersData()
-    console.log(memberData)
     return memberData
   } catch (error) {
     console.error(error)
-    console.log(error)
     throw new Error('failed to fetch Action data')
   }
 }
@@ -92,7 +90,6 @@ export async function CustDetailsAction(
       totalAmount,
       details,
     }
-    console.log(response)
     return response
   } catch (error) {
     console.error(error)

@@ -23,7 +23,6 @@ const FilterListSlice = createSlice({
   } as FilterListState,
   reducers: {
     setFilterList: (state, action) => {
-      console.log('its me filter list slice', action.payload)
       state.data = action.payload
     },
     setSearchTerm: (state, action) => {

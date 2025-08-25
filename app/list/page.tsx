@@ -6,7 +6,6 @@ import { getDuesList } from '@/server/duesModel'
 async function ListPage() {
   try {
     const data = await getDuesList()
-    console.log(data)
     if (data.length === 0) {
       throw new Error('Failed to fetch list data')
     }

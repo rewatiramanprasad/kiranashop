@@ -50,7 +50,6 @@ function AddPayment() {
   })
   async function onSubmit(values: formSchemaType) {
     
-    console.log(values)
     try {
       await AddPaymentHandler({
         name: values.Name,
