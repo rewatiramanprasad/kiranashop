@@ -13,6 +13,7 @@ import DateInput from '@/components/dateInputs'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/lib/store'
 import { useRouter } from 'next/navigation'
+import { AddPaymentHandler } from '@/server/action'
 
 const formSchema = z.object({
   Name: z.string().min(2, {
@@ -31,7 +32,7 @@ const formSchema = z.object({
     message: 'Date cannot be in the future.',
   }),
 })
-type formSchemaType = z.infer<typeof formSchema>  
+type formSchemaType = z.infer<typeof formSchema>
 function AddPayment() {
   const router = useRouter()
   const id = useSelector((state: RootState) => state.CustomerDetails.id)
@@ -48,22 +49,36 @@ function AddPayment() {
     },
   })
   async function onSubmit(values: formSchemaType) {
+    // try {
+    //   const response = await fetch('http://localhost:3000/api/addDues', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ ...values, id }),
+    //   })
+    //   const resData = await response.json()
+    //   if (resData.success) {
+    //     form.reset()
+    //     toast.info('Payment added successfully')
+    //     router.back()
+    //   } else {
+    //     throw new Error('Failed to add Payment')
+    //   }
+    // } catch (error) {
+    //   console.error('Error adding payment:', error)
+    //   toast.error('Failed to add payment. Please try again.')
+    // }
+    console.log(values)
     try {
-      const response = await fetch('http://localhost:3000/api/addDues', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...values, id }),
+      await AddPaymentHandler({
+        name: values.Name,
+        mobile: values.Mobile,
+        amount: parseInt(values.Amount),
+        remarks: values.Remarks,
+        date: values.Date,
+        id: id,
       })
-      const resData = await response.json()
-      if (resData.success) {
-        form.reset()
-        toast.info('Payment added successfully')
-        router.back()
-      } else {
-        throw new Error('Failed to add Payment')
-      }
     } catch (error) {
       console.error('Error adding payment:', error)
       toast.error('Failed to add payment. Please try again.')
@@ -105,7 +120,7 @@ function AddPayment() {
             placeHolder="Remarks..."
             formType="text"
           />
-          <DateInput<formSchemaType> form={form} fieldName='Date' />
+          <DateInput<formSchemaType> form={form} fieldName="Date" />
 
           <div className="flex justify-center gap-2 items-center">
             <Button className="w-1/2 bg-second " type="submit">

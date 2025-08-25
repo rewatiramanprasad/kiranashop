@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const { id, Amount, Remarks } = body
     await createPayment({
       member_id: id,
-      amount: parseFloat(Amount),
+      amount: Amount,
       is_paid: false,
       dues_type: 'payment',
       remarks: Remarks || null,

@@ -1,4 +1,5 @@
 import {
+  createPayment,
   Dues,
   fetchAllMembersData,
   getContact,
@@ -96,4 +97,22 @@ export async function CustDetailsAction(
     console.error(error)
     throw new Error('Failed to fetch the CustDetails data ')
   }
+}
+interface AddPaymentProps {
+  id: string
+  name: string
+  mobile: string
+  amount: number
+  remarks: string
+  date: Date
+}
+export async function AddPaymentHandler(input: AddPaymentProps) {
+  const { id, name, mobile, amount, remarks, date } = input
+  await createPayment({
+    member_id: id,
+    amount: amount,
+    is_paid: false,
+    dues_type: 'payment',
+    remarks: remarks || null,
+  } as Dues)
 }
