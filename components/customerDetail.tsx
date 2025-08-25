@@ -14,9 +14,10 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const router = useRouter()
   const dispatch = useDispatch()
   const { dueData, totalAmount, details } = data
-  const userData=details[0]
+  const userData = details[0]
 
   useEffect(() => {
+    console.log('getting from dueData', dueData)
     dispatch(
       setCustomerDetails({
         id: userData.id,

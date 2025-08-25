@@ -15,7 +15,7 @@ export interface Dues {
   is_paid: boolean
   dues_type: string
   createdAt?: string
-  updatedAt?: string
+  updateAt?: string
 }
 
 export interface Customer extends DuesMember {
@@ -59,7 +59,7 @@ export type ListItem = {
   amount: number
 }
 export const getDuesList = async (): Promise<ListItem[]> => {
-  return await db<Dues>('dues')
+  const res = await db<Dues>('dues')
     .join('duesmember', 'dues.member_id', 'duesmember.id')
     .select(
       'duesmember.name',
@@ -72,12 +72,43 @@ export const getDuesList = async (): Promise<ListItem[]> => {
     )
     .groupBy('duesmember.name', 'duesmember.mobile', 'duesmember.id')
     .orderBy('update', 'asc')
+  return res.map((item) => ({
+    ...item,
+    update: new Date(item.update).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }),
+  }))
 }
 
 export const getDuesById = async (id: string): Promise<Dues[]> => {
-  return await db<Dues>('dues')
+  const res = await db<Dues>('dues')
     .where('member_id', id)
     .orderBy('createdAt', 'asc')
+  console.log(res)
+  return res.map((item) => ({
+    ...item,
+    createdAt: new Date(item.createdAt!).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }),
+    updateAt: new Date(item.updateAt!).toLocaleString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    }),
+  }))
 }
 export interface TotalDues {
   remainDues: number

@@ -22,7 +22,7 @@ async function DashboardPage() {
               return (
                 <div
                   key={item.heading}
-                  className="flex  flex-col gap-6 justify-center items-center h-44 m-8 bg-third text-first  rounded-lg shadow-md"
+                  className="flex  flex-col gap-6 justify-center items-center h-38 m-8 bg-third text-first  rounded-lg shadow-md"
                 >
                   <h2 className="text-xl font-bold">{item.heading}</h2>
                   <p className="text-lg">{item.data}</p>

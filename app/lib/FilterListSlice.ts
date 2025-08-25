@@ -5,7 +5,7 @@ interface Item {
   name: string
   amount: number
   mobile: number
-  createAt: Date
+  update: string
 }
 
 interface FilterListState {
@@ -23,7 +23,7 @@ const FilterListSlice = createSlice({
   } as FilterListState,
   reducers: {
     setFilterList: (state, action) => {
-      console.log("its me filter list slice",action.payload)
+      console.log('its me filter list slice', action.payload)
       state.data = action.payload
     },
     setSearchTerm: (state, action) => {

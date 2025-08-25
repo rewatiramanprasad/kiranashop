@@ -20,9 +20,9 @@ function SearchAndList({ data }: { data: ListItem[] }) {
   useEffect(() => {
     const modifyData = data.map((item) => ({
       ...item,
-      update: new Date(item.update).toISOString(),
+      update: item.update ? new Date(item.update).toISOString() : 'N/A',
     }))
-    console.log(modifyData)
+
     dispatch(setList(modifyData))
   }, [data, dispatch])
   return (
@@ -34,7 +34,7 @@ function SearchAndList({ data }: { data: ListItem[] }) {
         itemSize={76 + 8}
         width={'95%'}
         itemData={filterData}
-        className="mb-2 p-4 bg-first rounded shadow"
+        className="mb-2 p-2 bg-first rounded shadow"
       >
         {({ index, style }) => {
           const item = filterData[index]
