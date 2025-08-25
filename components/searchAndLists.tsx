@@ -17,9 +17,13 @@ function SearchAndList({ data }: { data: ListItem[] }) {
   }
 
   const filterData = useSelector(SearchFilterSelector)
-
   useEffect(() => {
-    dispatch(setList(data))
+    const modifyData = data.map((item) => ({
+      ...item,
+      update: new Date(item.update).toISOString(),
+    }))
+    console.log(modifyData)
+    dispatch(setList(modifyData))
   }, [data, dispatch])
   return (
     <div className="flex flex-col items-center">
@@ -34,7 +38,6 @@ function SearchAndList({ data }: { data: ListItem[] }) {
       >
         {({ index, style }) => {
           const item = filterData[index]
-          console.log(item)
           return (
             <Link href={`/list/${item.id}`}>
               <div
