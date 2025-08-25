@@ -109,13 +109,18 @@ interface AddPaymentProps {
 }
 export async function AddPaymentHandler(input: AddPaymentProps) {
   const { id, name, mobile, amount, remarks, date } = input
-  await createPayment({
-    member_id: id,
-    amount: amount,
-    is_paid: false,
-    dues_type: 'payment',
-    remarks: remarks || null,
-  } as Dues)
+  try {
+    await createPayment({
+      member_id: id,
+      amount: amount,
+      is_paid: false,
+      dues_type: 'payment',
+      remarks: remarks || null,
+    } as Dues)
+  } catch (error) {
+    console.error(error)
+    throw new Error('Failed to add payment')
+  }
 }
 export async function AddDuesHandler(input: AddPaymentProps) {
   try {
@@ -132,5 +137,3 @@ export async function AddDuesHandler(input: AddPaymentProps) {
     throw new Error('Failed to add dues')
   }
 }
-
-
