@@ -55,7 +55,7 @@ export type ListItem = {
   name: string
   mobile: string
   id: string
-  updateAt: string
+  update: string
   amount: number
 }
 export const getDuesList = async (): Promise<ListItem[]> => {
@@ -65,15 +65,13 @@ export const getDuesList = async (): Promise<ListItem[]> => {
       'duesmember.name',
       'duesmember.mobile',
       'duesmember.id',
-      db.raw(`max('dues.updateAt') as update`),
+      db.raw(`max("dues"."updateAt") as update`),
       db.raw(
-        `sum(amount)-sum(case when is_paid= true then amount else 0 end)- sum(case when dues_type= 'payment' then amount else 0 end) as amount`
+        `sum(CASE WHEN dues_type = 'dues' THEN amount ELSE 0 END)-sum(case when is_paid= true then amount else 0 end)- sum(case when dues_type= 'payment' then amount else 0 end) as amount`
       )
     )
     .groupBy('duesmember.name', 'duesmember.mobile', 'duesmember.id')
     .orderBy('update', 'asc')
-
-  
 }
 
 export const getDuesById = async (id: string): Promise<Dues[]> => {
@@ -89,7 +87,7 @@ export const getTotalAmountById = async (id: string): Promise<TotalDues[]> => {
     .where('member_id', id)
     .select(
       db.raw(
-        ` SUM(amount) 
+        ` SUM(CASE WHEN dues_type = 'dues' THEN amount ELSE 0 END) 
     - SUM(CASE WHEN is_paid = true THEN amount ELSE 0 END) 
     - SUM(CASE WHEN dues_type = 'payment' THEN amount ELSE 0 END)
   as "remainDues"`
@@ -117,7 +115,7 @@ export const getContact = async () => {
 
 export const maxDues = async () => {
   const data = await db.raw(
-    `select member_id,(sum(amount)-sum(case when is_paid=true  then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues desc limit 1`
+    `select member_id,(sum(CASE WHEN dues_type = 'dues' THEN amount ELSE 0 END)-sum(case when is_paid=true  then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues desc limit 1`
   )
 
   const id = data.rows[0].member_id
@@ -129,7 +127,7 @@ export const maxDues = async () => {
 
 export const minDues = async () => {
   const data = await db.raw(
-    `select member_id,(sum(amount)-sum(case when is_paid=true then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues asc limit 1`
+    `select member_id,(sum(CASE WHEN dues_type = 'dues' THEN amount ELSE 0 END)-sum(case when is_paid=true then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id order by remaindues asc limit 1`
   )
 
   const id = data.rows[0].member_id
@@ -138,7 +136,7 @@ export const minDues = async () => {
 
 export const totalDues = async () => {
   return db.raw(
-    `select sum(remainDues)as totalDues from (select member_id,(sum(amount)-sum(case when is_paid=true then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id ) as totalDuesTable`
+    `select sum(remainDues)as totalDues from (select member_id,(sum(CASE WHEN dues_type = 'dues' THEN amount ELSE 0 END)-sum(case when is_paid=true then amount else 0 end)- sum(case when dues_type='payment' then amount else 0 end))as remaindues from dues group by member_id ) as totalDuesTable`
   )
 }
 
