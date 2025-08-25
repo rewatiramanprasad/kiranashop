@@ -1,11 +1,19 @@
+'use client'
 import Container from '@/components/container'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
+// import shoppinglady from '../public/Shopping.lottie'
 
 export default function Home() {
   return (
     <Container>
-      <h1 className="flex text-4xl justify-center h-lvh items-center bg-amber-500">
-        Kirana Shop {process.env.NEXT_PUBLIC_STAGE}
-      </h1>
+      <div className="flex items-center justify-center mt-55">
+        <DotLottieReact
+          src="/shoppingLady.lottie"
+          loop
+          autoplay
+          className="w-100 h-50 "
+        />
+      </div>
     </Container>
   )
 }
