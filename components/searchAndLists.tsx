@@ -18,12 +18,12 @@ function SearchAndList({ data }: { data: ListItem[] }) {
 
   const filterData = useSelector(SearchFilterSelector)
   useEffect(() => {
-    const modifyData = data.map((item) => ({
-      ...item,
-      update: item.update ? new Date(item.update).toISOString() : 'N/A',
-    }))
+    // const modifyData = data.map((item) => ({
+    //   ...item,
+    //   update: item.update ? new Date(item.update).toISOString() : 'N/A',
+    // }))
 
-    dispatch(setList(modifyData))
+    dispatch(setList(data))
   }, [data, dispatch])
   return (
     <div className="flex flex-col items-center">
