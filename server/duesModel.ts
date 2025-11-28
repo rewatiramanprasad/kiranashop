@@ -95,7 +95,7 @@ export const getDuesList = async (): Promise<ListItem[]> => {
 export const getDuesById = async (id: string): Promise<Dues[]> => {
   const res = await db<Dues>("dues")
     .where("member_id", id)
-    .orderBy("createdAt", "asc");
+    .orderBy("createdAt", "desc");
   return res.map((item) => ({
     ...item,
     createdAt: new Date(item.createdAt!).toLocaleString("en-GB", {
