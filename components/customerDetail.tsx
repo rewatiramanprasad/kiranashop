@@ -38,15 +38,32 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const handlePayment = () => {
     router.push(`/list/${userData.id}/addPayment`)
   }
+  const sendWhatsApp = ({name,mobile,amount}:{ name: string; mobile: string; amount: number}) => {
+  const msg = `
+Hello ${name},
+Your due amount is ₹${amount}.
+  `;
+
+  const url = `https://wa.me/${mobile}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+};
+
   return (
     <div className=" relative flex flex-col items-center justify-center gap-0">
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold tracking-wider text-white">
+      <div className="flex flex-row items-center justify-between gap-16">
+        <div>
+          <h1 className="text-2xl font-bold tracking-wider text-white">
           {userData.name}
         </h1>
         <h2 className="text-xl font-semibold text-gray-400">
           {userData.mobile}
         </h2>
+        </div>
+        <div>
+          <button className='bg-chart-2 text-white border border-chart-2 rounded p-2'
+          onClick={()=>{sendWhatsApp({name:userData.name,mobile:`${userData.mobile}`,amount:totalAmount[0].remainDues})}}
+          >whatsapp</button>
+        </div>
       </div>
       <div className="flex flex-col items-center justify-center w-full">
         <List
