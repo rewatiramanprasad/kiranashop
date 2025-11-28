@@ -10,6 +10,8 @@ import FormInput from '@/components/formInput'
 import React from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { Customer } from '@/server/duesModel'
+import { AddMember } from '@/server/action'
 
 const formSchema = z.object({
   Name: z.string().min(2, {
@@ -21,9 +23,7 @@ const formSchema = z.object({
   Amount: z.string().min(1, {
     message: 'Amount is required.',
   }),
-  Remarks: z.string().min(2, {
-    message: 'Remarks must be at least 2 characters.',
-  }),
+  Remarks: z.string().optional()
   
 })
  type formSchemaType = z.infer<typeof formSchema>
@@ -39,21 +39,16 @@ function AddCustomer() {
     },
   })
   async function onSubmit(values: formSchemaType) {
+    const mapping:Customer={
+      name:values.Name,
+      mobile:Number(values.Mobile),
+      amount:Number(values.Amount),
+      remarks:values.Remarks
+    }
     try {
-      const response = await fetch('http://localhost:3000/api/addCustomer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
-      const resData = await response.json()
-      if (resData.success) {
-        form.reset()
-        toast.info('Customer added successfully')
-      } else {
-        throw new Error('Failed to add customer')
-      }
+      await AddMember(mapping)
+      form.reset()
+      toast.info('Customer added successfully')
       router.push('/list')
     } catch (error) {
       console.error('Error adding customer:', error)

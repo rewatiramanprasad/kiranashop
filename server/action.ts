@@ -1,7 +1,9 @@
 'use server'
 import {
+  createCustomer,
   createDues,
   createPayment,
+  Customer,
   Dues,
   fetchAllMembersData,
   getContact,
@@ -62,6 +64,7 @@ export async function exportAction(): Promise<ActionItem[]> {
     throw new Error('failed to fetch Action data')
   }
 }
+
 export async function contactAction(): Promise<ContactItem[]> {
   try {
     const contactData: ContactItem[] = await getContact()
@@ -96,6 +99,7 @@ export async function CustDetailsAction(
     throw new Error('Failed to fetch the CustDetails data ')
   }
 }
+
 interface AddPaymentProps {
   id: string
   name: string
@@ -104,6 +108,7 @@ interface AddPaymentProps {
   remarks: string
   date: Date
 }
+
 export async function AddPaymentHandler(input: AddPaymentProps) {
   const { id, name, mobile, amount, remarks, date } = input
   try {
@@ -119,6 +124,7 @@ export async function AddPaymentHandler(input: AddPaymentProps) {
     throw new Error('Failed to add payment')
   }
 }
+
 export async function AddDuesHandler(input: AddPaymentProps) {
   try {
     const { id, name, mobile, amount, remarks, date } = input
@@ -133,4 +139,21 @@ export async function AddDuesHandler(input: AddPaymentProps) {
     console.error(error)
     throw new Error('Failed to add dues')
   }
+}
+
+export async function AddMember(input:Customer ){
+  const {name,mobile,amount,remarks}=input
+  try {
+     await createCustomer({
+        name:name,
+        mobile:mobile,
+        amount:amount,
+        remarks:remarks||"item Added"
+     })
+  } catch (error) {
+    console.log(error)
+    throw new Error('Failed to add Member')
+    
+  }
+
 }
