@@ -78,7 +78,7 @@ export const getDuesList = async (): Promise<ListItem[]> => {
       )
     )
     .groupBy("duesmember.name", "duesmember.mobile", "duesmember.id")
-    .orderBy("update", "asc");
+    .orderBy("update", "desc");
   return res.map((item) => ({
     ...item,
     update: new Date(item.update).toLocaleString("en-GB", {
