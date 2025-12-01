@@ -68,10 +68,10 @@ Your due amount is ₹${amount}.
     <div className=" relative flex flex-col items-center justify-center gap-0">
       <div className="flex flex-row items-center justify-between gap-16">
         <div>
-          <h1 className="text-2xl font-bold tracking-wider text-white">
+          <h1 className="text-2xl capitalize font-bold tracking-wider text-white">
             {userData.name}
           </h1>
-          <h2 className="text-xl font-semibold text-gray-400">
+          <h2 className="text-lg font-semibold text-gray-400">
             {userData.mobile}
           </h2>
         </div>
@@ -83,6 +83,7 @@ Your due amount is ₹${amount}.
           <div className="bg-transparent">
             <button
               onClick={() => setOpen(!open)}
+              onBlur={()=>setOpen(false)}
               className="bg-chart-2 text-white border border-chart-2 rounded p-2"
             >
               Actions
