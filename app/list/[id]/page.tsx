@@ -20,7 +20,7 @@ async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
     return (
       <Container>
         <h1 className="text-2xl font-bold text-red-500">
-          Error:{' '}
+          Error:
           {error instanceof Error ? error.message : 'An unknown error occurred'}
         </h1>
       </Container>

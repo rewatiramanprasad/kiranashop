@@ -4,6 +4,7 @@ import {
   createDues,
   createPayment,
   Customer,
+  deleteMember,
   Dues,
   fetchAllMembersData,
   getContact,
@@ -141,19 +142,27 @@ export async function AddDuesHandler(input: AddPaymentProps) {
   }
 }
 
-export async function AddMember(input:Customer ){
-  const {name,mobile,amount,remarks}=input
+export async function AddMember(input: Customer) {
+  const { name, mobile, amount, remarks } = input
   try {
-     await createCustomer({
-        name:name,
-        mobile:mobile,
-        amount:amount,
-        remarks:remarks||"item Added"
-     })
+    await createCustomer({
+      name: name,
+      mobile: mobile,
+      amount: amount,
+      remarks: remarks || 'item Added',
+    })
   } catch (error) {
     console.log(error)
     throw new Error('Failed to add Member')
-    
   }
+}
 
+export async function deleteCustomer(id: string) {
+  
+  try {
+    await deleteMember(id)
+  } catch (error) {
+    console.log(error)
+    throw new Error('Failed to delete Member')
+  }
 }

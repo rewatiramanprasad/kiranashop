@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { FixedSizeList as List } from 'react-window'
 import ListWithStrike from './listWithStrikes'
@@ -8,9 +8,11 @@ import ListWithPayment from './listWithPayments'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
-import { CustDetailsActionResponse } from '@/server/action'
+import { CustDetailsActionResponse, deleteCustomer } from '@/server/action'
+import { Separator } from './ui/separator'
 
 function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
+  const [open, setOpen] = useState(false)
   const router = useRouter()
   const dispatch = useDispatch()
   const { dueData, totalAmount, details } = data
@@ -38,31 +40,74 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const handlePayment = () => {
     router.push(`/list/${userData.id}/addPayment`)
   }
-  const sendWhatsApp = ({name,mobile,amount}:{ name: string; mobile: string; amount: number}) => {
-  const msg = `
+  const sendWhatsApp = ({
+    name,
+    mobile,
+    amount,
+  }: {
+    name: string
+    mobile: string
+    amount: number
+  }) => {
+    const msg = `
 Hello ${name},
 Your due amount is ₹${amount}.
-  `;
+  `
 
-  const url = `https://wa.me/${mobile}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-};
+    const url = `https://wa.me/${mobile}?text=${encodeURIComponent(msg)}`
+    window.open(url, '_blank')
+    // onClick={()=>{sendWhatsApp({name:userData.name,mobile:`${userData.mobile}`,amount:totalAmount[0].remainDues})}}
+  }
+  const handleDelete = async (id: string) => {
+    console.log(id)
+    await deleteCustomer(id)
+    router.push('/list')
+  }
 
   return (
     <div className=" relative flex flex-col items-center justify-center gap-0">
       <div className="flex flex-row items-center justify-between gap-16">
         <div>
           <h1 className="text-2xl font-bold tracking-wider text-white">
-          {userData.name}
-        </h1>
-        <h2 className="text-xl font-semibold text-gray-400">
-          {userData.mobile}
-        </h2>
+            {userData.name}
+          </h1>
+          <h2 className="text-xl font-semibold text-gray-400">
+            {userData.mobile}
+          </h2>
         </div>
         <div>
-          <button className='bg-chart-2 text-white border border-chart-2 rounded p-2'
-          onClick={()=>{sendWhatsApp({name:userData.name,mobile:`${userData.mobile}`,amount:totalAmount[0].remainDues})}}
-          >whatsapp</button>
+          {/* <button className='bg-chart-2 text-white border border-chart-2 rounded p-2'
+          >whatsapp</button> */}
+
+          {/* <ActionButton/> */}
+          <div className="bg-transparent">
+            <button
+              onClick={() => setOpen(!open)}
+              className="bg-chart-2 text-white border border-chart-2 rounded p-2"
+            >
+              Actions
+            </button>
+            {open && (
+              <div className=" absolute z-1 mt-1 p-2 flex flex-col justify-center items-center bg-white rounded-xl">
+                <button
+                  onClick={() => {
+                    sendWhatsApp({
+                      name: userData.name,
+                      mobile: `${userData.mobile}`,
+                      amount: totalAmount[0].remainDues,
+                    })
+                  }}
+                  className="bg-white"
+                >
+                  whatsapp
+                </button>
+                <Separator orientation="horizontal" />
+                <button onClick={() => handleDelete(userData.id!)}>
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center w-full">
