@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import dynamic from 'next/dynamic'
@@ -44,7 +43,8 @@ export default function MapPage() {
       />
       <Marker position={[CurrLoc.lat, CurrLoc.lng]}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          Hi! seller thanks for using our app. <br />
+          You belong from here.
         </Popup>
       </Marker>
     </MapContainer>
