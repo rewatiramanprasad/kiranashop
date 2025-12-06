@@ -5,7 +5,7 @@ import { FixedSizeList as List } from 'react-window'
 import ListWithStrike from './listWithStrikes'
 import ListWithoutStrike from './listWithoutStrikes'
 import ListWithPayment from './listWithPayments'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { setCustomerDetails } from '@/app/lib/customerDetailsSlice'
 import { CustDetailsActionResponse, deleteCustomer } from '@/server/action'
@@ -61,7 +61,7 @@ Your due amount is ₹${amount}.
   const handleDelete = async (id: string) => {
     console.log(id)
     await deleteCustomer(id)
-    router.push('/list')
+    redirect('/list')
   }
 
   return (

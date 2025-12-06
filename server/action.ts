@@ -36,8 +36,8 @@ export interface ContactItem {
 }
 
 export async function dashboardAction(): Promise<{
-  maxDues: string
-  minDues: string
+  maxDues: { id?: string; name: string }
+  minDues: { id?: string; name: string }
   total: string
 }> {
   try {
@@ -45,8 +45,8 @@ export async function dashboardAction(): Promise<{
     const min = await minDues()
     const total = await totalDues()
     const data = {
-      maxDues: max[0].name,
-      minDues: min[0].name,
+      maxDues: max[0],
+      minDues: min[0],
       total: total.rows[0].totaldues,
     }
     return data
@@ -158,8 +158,9 @@ export async function AddMember(input: Customer) {
 }
 
 export async function deleteCustomer(id: string) {
-  
   try {
+    console.log("print from Action",id);
+    
     await deleteMember(id)
   } catch (error) {
     console.log(error)

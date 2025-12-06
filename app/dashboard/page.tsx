@@ -1,5 +1,7 @@
 import Container from '@/components/container'
 import { dashboardAction } from '@/server/action'
+import { LOADIPHLPAPI } from 'dns/promises'
+import Link from 'next/link'
 import React from 'react'
 
 async function DashboardPage() {
@@ -19,14 +21,17 @@ async function DashboardPage() {
           {data &&
             data.length > 0 &&
             data.map((item) => {
+              let id=typeof item.data!=='string'?item.data.id!:''
+              let link = typeof item.data !== 'string'?`/list/${id}`:'#'
               return (
-                <div
-                  key={item.heading}
-                  className="flex  flex-col gap-6 justify-center items-center h-38 m-8 bg-third text-first  rounded-lg shadow-md"
-                >
-                  <h2 className="text-xl font-bold">{item.heading}</h2>
-                  <p className="text-lg">{item.data}</p>
-                </div>
+                <Link key={item.heading} href={link}>
+                  <div className="flex  flex-col gap-6 justify-center items-center h-38 m-8 bg-third text-first  rounded-lg shadow-md">
+                    <h2 className="text-xl font-bold">{item.heading}</h2>
+                    {typeof item.data !== 'string' && (
+                      <p className="text-lg">{item.data.name}</p>
+                    )}
+                  </div>
+                </Link>
               )
             })}
         </div>

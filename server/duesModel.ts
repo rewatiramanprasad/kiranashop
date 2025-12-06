@@ -159,7 +159,7 @@ export const maxDues = async () => {
   if (id === undefined) {
     throw new Error('id is undefined in maxDues')
   }
-  return await db<DuesMember>('duesmember').select('name').where('id', id)
+  return await db<DuesMember>('duesmember').select('name','id').where('id', id)
 }
 
 export const minDues = async () => {
@@ -168,7 +168,7 @@ export const minDues = async () => {
   )
 
   const id = data.rows[0].member_id
-  return await db<DuesMember>('duesmember').select('name').where('id', id)
+  return await db<DuesMember>('duesmember').select('name','id').where('id', id)
 }
 
 export const totalDues = async () => {
