@@ -3,12 +3,15 @@ import Container from '@/components/container'
 import { ActionItem, exportAction } from '@/server/action'
 import React from 'react'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
+
 export default async function ActionPage() {
   let response: ActionItem[] | null = null
   let errorMessage: string | null = null
 
   try {
-     response = await exportAction()
+    response = await exportAction()
   } catch (error) {
     errorMessage =
       error instanceof Error ? error.message : 'An unexpected error occurred'

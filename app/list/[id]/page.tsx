@@ -3,6 +3,8 @@ import CustomerDetails from '@/components/customerDetail'
 import { CustDetailsAction, CustDetailsActionResponse } from '@/server/action'
 import React from 'react'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
 
 async function CustDetails({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params

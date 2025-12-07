@@ -3,6 +3,9 @@ import ContactList from '@/components/contactLists'
 import Container from '@/components/container'
 import { contactAction, ContactItem } from '@/server/action'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
+
 async function ContactPage() {
   let response: ContactItem[] | null = null
   let errorMessage: string | null = null
