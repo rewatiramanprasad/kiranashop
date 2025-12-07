@@ -3,22 +3,25 @@ import { dashboardAction } from '@/server/action'
 import Link from 'next/link'
 import React from 'react'
 
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
+
 async function DashboardPage() {
   interface DashboardActionResponse {
     maxDues: {
-        id?: string | undefined;
-        name: string;
-    };
+      id?: string | undefined
+      name: string
+    }
     minDues: {
-        id?: string | undefined;
-        name: string;
-    };
-    total: string;
-}
+      id?: string | undefined
+      name: string
+    }
+    total: string
+  }
   let errorMessage: string | null = null
-  let response: DashboardActionResponse| null=null
+  let response: DashboardActionResponse | null = null
   try {
-     response = await dashboardAction()
+    response = await dashboardAction()
   } catch (error) {
     errorMessage =
       error instanceof Error ? error.message : 'An unexpected error occurred'
@@ -26,12 +29,12 @@ async function DashboardPage() {
   }
 
   const data = [
-     { heading: 'Total dues', data: `Rs. ${response!.total}/-` },
-     { heading: 'Maximum dues', data: response!.maxDues },
-     { heading: 'Minimum dues', data: response!.minDues },
+    { heading: 'Total dues', data: `Rs. ${response!.total}/-` },
+    { heading: 'Maximum dues', data: response!.maxDues },
+    { heading: 'Minimum dues', data: response!.minDues },
   ]
-  
-  if (errorMessage) { 
+
+  if (errorMessage) {
     return (
       <Container>
         <div className="text-red-500">
@@ -41,7 +44,7 @@ async function DashboardPage() {
       </Container>
     )
   }
-  
+
   return (
     <div className="bg-first min-h-screen ">
       <h1 className=" flex justify-center text-2xl pt-6 font-bold text-second">
@@ -51,8 +54,8 @@ async function DashboardPage() {
         {data &&
           data.length > 0 &&
           data.map((item) => {
-            const id=typeof item.data!=='string'?item.data.id!:''
-            const link = typeof item.data !== 'string'?`/list/${id}`:'#'
+            const id = typeof item.data !== 'string' ? item.data.id! : ''
+            const link = typeof item.data !== 'string' ? `/list/${id}` : '#'
             return (
               <Link key={item.heading} href={link}>
                 <div className="flex  flex-col gap-6 justify-center items-center h-38 m-8 bg-third text-first  rounded-lg shadow-md">
