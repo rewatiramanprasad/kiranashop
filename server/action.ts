@@ -111,7 +111,7 @@ interface AddPaymentProps {
 }
 
 export async function AddPaymentHandler(input: AddPaymentProps) {
-  const { id, name, mobile, amount, remarks, date } = input
+  const { id, amount, remarks } = input
   try {
     await createPayment({
       member_id: id,
@@ -128,7 +128,7 @@ export async function AddPaymentHandler(input: AddPaymentProps) {
 
 export async function AddDuesHandler(input: AddPaymentProps) {
   try {
-    const { id, name, mobile, amount, remarks, date } = input
+    const { id, amount, remarks } = input
     await createDues({
       member_id: id,
       amount: amount,

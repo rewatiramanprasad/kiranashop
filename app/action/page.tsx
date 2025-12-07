@@ -3,45 +3,31 @@ import Container from '@/components/container'
 import { ActionItem, exportAction } from '@/server/action'
 import React from 'react'
 
-// export interface ActionItem {
-//   id: number
-//   name: string
-//   mobile: number
-//   amount: number
-//   remarks: string | null
-//   is_paid: number
-//   dues_type: string
-//   createdAt: Date
-//   updateAt: string
-// }
+export default async function ActionPage() {
+  let response: ActionItem[] | null = null
+  let errorMessage: string | null = null
 
-// export interface ActionResponse {
-//   data: ActionItem[]
-//   success: boolean
-//   message: string
-// }
-
-async function ActionPage() {
   try {
-    const response: ActionItem[] = await exportAction()
-    return (
-      <Container>
-        <ActionDetails data={response} />
-      </Container>
-    )
+     response = await exportAction()
   } catch (error) {
-    const message =
+    errorMessage =
       error instanceof Error ? error.message : 'An unexpected error occurred'
     console.error('Error fetching ActionPage:', error)
+  }
+
+  if (errorMessage) {
     return (
       <Container>
         <div className="text-red-500">
           <h1>Error</h1>
-          <p>{message}</p>
+          <p>{errorMessage}</p>
         </div>
       </Container>
     )
   }
+  return (
+    <Container>
+      <ActionDetails data={response!} />
+    </Container>
+  )
 }
-
-export default ActionPage

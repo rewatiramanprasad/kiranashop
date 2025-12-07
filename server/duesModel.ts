@@ -159,7 +159,7 @@ export const maxDues = async () => {
   if (id === undefined) {
     throw new Error('id is undefined in maxDues')
   }
-  return await db<DuesMember>('duesmember').select('name','id').where('id', id)
+  return await db<DuesMember>('duesmember').select('name', 'id').where('id', id)
 }
 
 export const minDues = async () => {
@@ -168,7 +168,7 @@ export const minDues = async () => {
   )
 
   const id = data.rows[0].member_id
-  return await db<DuesMember>('duesmember').select('name','id').where('id', id)
+  return await db<DuesMember>('duesmember').select('name', 'id').where('id', id)
 }
 
 export const totalDues = async () => {
@@ -193,10 +193,10 @@ export const fetchAllMembersData = async () => {
     )
 }
 
-export const deleteMember = async (id: String) => {
+export const deleteMember = async (id: string) => {
   try {
-    await db<Dues>('dues').where('member_id', id).del();
-    await db<DuesMember>('duesmember').where('id', id).del();
+    await db<Dues>('dues').where('member_id', id).del()
+    await db<DuesMember>('duesmember').where('id', id).del()
   } catch (error) {
     console.log(error)
     throw new Error('Failed to delete Member from model')

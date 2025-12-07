@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import dynamic from 'next/dynamic'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 
