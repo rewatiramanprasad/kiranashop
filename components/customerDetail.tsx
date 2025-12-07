@@ -40,7 +40,7 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
   const handlePayment = () => {
     router.push(`/list/${userData.id}/addPayment`)
   }
-  const sendWhatsApp = ({
+  const sendWhatsApp = async ({
     name,
     mobile,
     amount,
@@ -50,12 +50,12 @@ function CustomerDetails({ data }: { data: CustDetailsActionResponse }) {
     amount: number
   }) => {
     const msg = `
-Hello ${name},
-Your due amount is ₹${amount}.
-  `
-
+      Hello ${name},
+      Your due amount is ₹${amount}.
+      `
+    console.log('calling the whatsapp function')
     const url = `https://wa.me/${mobile}?text=${encodeURIComponent(msg)}`
-    window.open(url, '_blank')
+    await window.open(url, '_blank')
     // onClick={()=>{sendWhatsApp({name:userData.name,mobile:`${userData.mobile}`,amount:totalAmount[0].remainDues})}}
   }
   const handleDelete = async (id: string) => {
@@ -83,31 +83,11 @@ Your due amount is ₹${amount}.
           <div className="bg-transparent">
             <button
               onClick={() => setOpen(!open)}
-              onBlur={()=>setOpen(false)}
+              onMouseDown={() => setOpen(false)}
               className="bg-chart-2 text-white border border-chart-2 rounded p-2"
             >
               Actions
             </button>
-            {open && (
-              <div className=" absolute z-1 mt-1 p-2 flex flex-col justify-center items-center bg-white rounded-xl">
-                <button
-                  onClick={() => {
-                    sendWhatsApp({
-                      name: userData.name,
-                      mobile: `${userData.mobile}`,
-                      amount: totalAmount[0].remainDues,
-                    })
-                  }}
-                  className="bg-white"
-                >
-                  whatsapp
-                </button>
-                <Separator orientation="horizontal" />
-                <button onClick={() => handleDelete(userData.id!)}>
-                  Delete
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -137,6 +117,43 @@ Your due amount is ₹${amount}.
           }}
         </List>
       </div>
+      {open && (
+        <div className=" relative z-1 w-full bottom-25 mt-1 p-4  bg-white rounded-xl">
+          <div className="flex flex-row  pb-4 justify-between items-center">
+            <h3>Actions</h3>{' '}
+            <button className="bg-gray-600 tracking-wider text-white px-2 rounded " onClick={() => setOpen(false)}>
+              X
+            </button>
+          </div>
+          <div className="flex flex-row justify-evenly items-center">
+            <button
+              onClick={() => {
+                sendWhatsApp({
+                  name: userData.name,
+                  mobile: `${userData.mobile}`,
+                  amount: totalAmount[0].remainDues,
+                })
+              }}
+              className="bg-chart-2 text-white border border-chart-2 rounded p-2"
+            >
+              Whatsapp
+            </button>
+            {/* <h1>|</h1> */}
+            <Separator
+              orientation={'vertical'}
+              className="h-10 bg-gray-200"
+            />
+            <button
+              className="bg-red-500 text-white border border-red-500 rounded p-2"
+              onClick={() => {
+                handleDelete(userData.id!)
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
       <div className="fixed bottom-13 grid grid-rows-2 items-center justify-center w-full">
         <h2 className="text-2xl  pl-8 tracking-wider  font-semibold text-gray-400">
           Total Dues: Rs:{totalAmount[0].remainDues}
